@@ -1,0 +1,81 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 131, 200, 0.22), transparent 30%),
+    radial-gradient(circle at 50% 60%, rgba(169, 133, 255, 0.18), transparent 36%),
+    #05040a;
+  animation: loaderHide 0.85s ease both;
+}
+
+.loader__butterfly {
+  width: 96px;
+  height: 72px;
+  position: relative;
+  animation: loaderFloat 1.3s ease-in-out infinite;
+}
+
+.loader__butterfly span {
+  position: absolute;
+  top: 10px;
+  width: 42px;
+  height: 56px;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  background:
+    radial-gradient(circle at 55% 32%, rgba(255, 255, 255, 0.9), transparent 10%),
+    linear-gradient(135deg, rgba(255, 131, 200, 0.9), rgba(169, 133, 255, 0.65));
+  box-shadow: 0 0 38px rgba(255, 131, 200, 0.45);
+}
+
+.loader__butterfly span:first-child {
+  left: 8px;
+  border-radius: 70% 35% 70% 35%;
+  transform-origin: right center;
+  animation: wingLeft 0.55s ease-in-out infinite alternate;
+}
+
+.loader__butterfly span:last-child {
+  right: 8px;
+  border-radius: 35% 70% 35% 70%;
+  transform-origin: left center;
+  animation: wingRight 0.55s ease-in-out infinite alternate;
+}
+
+.loader__text {
+  position: absolute;
+  margin-top: 150px;
+  color: var(--text);
+  font-family: var(--font-accent);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+@keyframes wingLeft {
+  from { transform: rotateY(0deg) rotate(-8deg); }
+  to { transform: rotateY(45deg) rotate(6deg); }
+}
+
+@keyframes wingRight {
+  from { transform: rotateY(0deg) rotate(8deg); }
+  to { transform: rotateY(-45deg) rotate(-6deg); }
+}
+
+@keyframes loaderFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes loaderHide {
+  0%, 65% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

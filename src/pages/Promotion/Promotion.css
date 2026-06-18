@@ -1,0 +1,136 @@
+.promotion {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 131, 200, 0.18), transparent 36%),
+    linear-gradient(180deg, #08050d, #120816 50%, #05040a);
+}
+
+.promotion__ranks {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.promotion__rank {
+  min-height: 132px;
+  padding: 18px 10px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  animation: rankReveal 0.58s ease calc(0.1s + var(--delay)) both;
+}
+
+.promotion__rank span {
+  font-family: serif;
+  font-size: 44px;
+  color: var(--purple-light);
+  text-shadow: 0 0 20px rgba(169, 133, 255, 0.35);
+}
+
+.promotion__rank p {
+  margin: 8px 0 0;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.promotion__timeline {
+  display: grid;
+  gap: 16px;
+}
+
+.promotion__step {
+  padding: 26px;
+  opacity: 0;
+  animation: stepReveal 0.65s ease calc(0.15s + var(--delay)) both;
+}
+
+.promotion__step-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.promotion__step h2 {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: clamp(28px, 4vw, 46px);
+  letter-spacing: -0.035em;
+}
+
+.promotion__step-head span {
+  color: var(--pink);
+  font-size: 28px;
+}
+
+.promotion__step ul {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.promotion__info {
+  margin-top: 18px;
+  padding: 30px;
+}
+
+.promotion__info h2 {
+  margin: 0 0 14px;
+  font-family: var(--font-title);
+  font-size: 42px;
+}
+
+.promotion__info p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.promotion__info p + p {
+  margin-top: 12px;
+}
+
+@keyframes rankReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes stepReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .promotion__ranks {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .promotion__ranks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .promotion__step-head {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,109 @@
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope/static/Manrope-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saira";
+  src: url("./assets/fonts/Saira/static/Saira-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spline_Sans";
+  src: url("./assets/fonts/Spline_Sans/static/SplineSans-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Science_Gothic";
+  src: url("./assets/fonts/Science_Gothic/static/ScienceGothic-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Science_Gothic";
+  src: url("./assets/fonts/Science_Gothic/static/ScienceGothic-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #05040a;
+  --black-soft: #0d0a14;
+  --white: #fff8ff;
+  --text: rgba(255, 248, 255, 0.78);
+  --muted: rgba(255, 248, 255, 0.58);
+
+  --purple: #a985ff;
+  --purple-light: #d7c4ff;
+  --pink: #ff83c8;
+  --rose: #ff5f8f;
+  --green: #9dffdc;
+
+  --glass: rgba(15, 10, 24, 0.56);
+  --border: rgba(255, 255, 255, 0.15);
+
+  --font-title: "Science_Gothic", sans-serif;
+  --font-accent: "Saira", sans-serif;
+  --font-text: "Spline_Sans", sans-serif;
+  --font-small: "Manrope", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(169, 133, 255, 0.2), transparent 34%),
+    radial-gradient(circle at 80% 10%, rgba(255, 131, 200, 0.18), transparent 34%),
+    var(--black);
+  color: var(--white);
+  font-family: var(--font-text);
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  color: var(--black);
+  background: var(--pink);
+}

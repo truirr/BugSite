@@ -1,0 +1,79 @@
+.page-shell {
+  min-height: 100vh;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.page-shell--hidden {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.page {
+  min-height: 100vh;
+  padding: 140px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page__container {
+  width: min(100% - 32px, 1180px);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.page__eyebrow {
+  margin: 0 0 14px;
+  color: var(--purple-light);
+  font-family: var(--font-accent);
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.page__title {
+  margin: 0 0 26px;
+  max-width: 900px;
+  font-family: var(--font-title);
+  font-size: clamp(42px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.page__text {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025)),
+    rgba(10, 8, 16, 0.72);
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.reveal-up {
+  animation: revealUp 0.8s ease both;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

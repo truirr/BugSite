@@ -1,0 +1,79 @@
+.composition {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(255, 131, 200, 0.16), transparent 32%),
+    linear-gradient(180deg, #08050d, #05040a);
+}
+
+.composition__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.composition__card {
+  padding: 26px;
+  min-height: 260px;
+  opacity: 0;
+  animation: compositionReveal 0.65s ease calc(0.1s + var(--delay)) both;
+}
+
+.composition__kanji {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 131, 200, 0.3), rgba(169, 133, 255, 0.26));
+  color: var(--white);
+  font-family: serif;
+  font-size: 36px;
+  box-shadow: 0 0 38px rgba(255, 131, 200, 0.18);
+}
+
+.composition__card h2 {
+  margin: 24px 0 14px;
+  font-family: var(--font-title);
+  font-size: 34px;
+  letter-spacing: -0.03em;
+}
+
+.composition__card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.composition__card li {
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.composition__empty {
+  color: rgba(255, 248, 255, 0.35) !important;
+  font-style: italic;
+}
+
+@keyframes compositionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px) rotateX(8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .composition__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .composition__grid {
+    grid-template-columns: 1fr;
+  }
+}
