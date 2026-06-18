@@ -1,41 +1,222 @@
 .estate {
+  position: relative;
   background:
     radial-gradient(circle at 16% 24%, rgba(169, 133, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(255, 131, 200, 0.12), transparent 34%),
     linear-gradient(180deg, #08050d, #110817 55%, #05040a);
+}
+
+.estate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.17;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 84%, transparent);
+}
+
+.estate__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  pointer-events: none;
+  animation: estateOrbFloat 10s ease-in-out infinite;
+}
+
+.estate__orb--left {
+  top: 160px;
+  left: -120px;
+  width: 360px;
+  height: 360px;
+  background: rgba(169, 133, 255, 0.14);
+}
+
+.estate__orb--right {
+  right: -120px;
+  bottom: 180px;
+  width: 340px;
+  height: 340px;
+  background: rgba(255, 131, 200, 0.12);
+  animation-delay: 2s;
+}
+
+.estate__container {
+  position: relative;
+  z-index: 2;
+}
+
+.estate__lead {
+  max-width: 760px;
+  margin: -8px 0 36px;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.7;
 }
 
 .estate__list {
   display: grid;
-  gap: 12px;
-  counter-reset: rules;
+  gap: 18px;
 }
 
 .estate__rule {
-  padding: 20px 24px;
+  padding: 28px;
   display: grid;
-  grid-template-columns: 58px 1fr;
-  gap: 18px;
-  align-items: center;
+  grid-template-columns: 74px 1fr;
+  gap: 24px;
+  align-items: start;
+  border-radius: 30px;
   opacity: 0;
+  overflow: hidden;
+  position: relative;
   animation: estateReveal 0.55s ease calc(0.1s + var(--delay)) both;
 }
 
-.estate__rule span {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 131, 200, 0.36), rgba(169, 133, 255, 0.28));
-  color: var(--white);
-  font-family: var(--font-accent);
+.estate__rule::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(135deg, rgba(255, 131, 200, 0.16), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(169, 133, 255, 0.14), transparent 34%);
+  transition: opacity 0.28s ease;
 }
 
-.estate__rule p {
+.estate__rule:hover::before {
+  opacity: 1;
+}
+
+.estate__rule-index {
+  position: sticky;
+  top: 120px;
+  z-index: 2;
+}
+
+.estate__rule-index span {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.42), transparent 18%),
+    linear-gradient(135deg, rgba(255, 131, 200, 0.42), rgba(169, 133, 255, 0.32));
+  color: var(--white);
+  font-family: var(--font-accent);
+  font-size: 17px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.25);
+}
+
+.estate__rule-content {
+  position: relative;
+  z-index: 2;
+}
+
+.estate__rule-head {
+  margin-bottom: 14px;
+}
+
+.estate__rule h2 {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.estate__rule-text {
+  margin: 0;
+  max-width: 980px;
+  color: rgba(255, 248, 255, 0.82);
+  font-size: 18px;
+  line-height: 1.72;
+}
+
+.estate__note {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 1px solid rgba(169, 133, 255, 0.18);
+  border-radius: 22px;
+  background: rgba(169, 133, 255, 0.07);
+}
+
+.estate__note strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--purple-light);
+  font-family: var(--font-accent);
+  font-size: 15px;
+}
+
+.estate__note p {
   margin: 0;
   color: var(--text);
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.estate__block {
+  margin-top: 16px;
+  padding: 18px 20px;
+  border-radius: 22px;
+}
+
+.estate__block h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-accent);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+.estate__block p {
+  margin: 0;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.estate__block ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.estate__block li + li {
+  margin-top: 7px;
+}
+
+.estate__block--exception {
+  border: 1px solid rgba(215, 196, 255, 0.18);
+  background:
+    linear-gradient(135deg, rgba(169, 133, 255, 0.09), rgba(255, 255, 255, 0.025));
+}
+
+.estate__block--exception h3 {
+  color: var(--purple-light);
+}
+
+.estate__block--punishment {
+  border: 1px solid rgba(255, 95, 143, 0.24);
+  background:
+    linear-gradient(135deg, rgba(255, 95, 143, 0.12), rgba(255, 131, 200, 0.035));
+}
+
+.estate__block--punishment h3 {
+  color: #ff8dad;
+}
+
+.estate__block--punishment p {
+  color: rgba(255, 218, 228, 0.88);
 }
 
 @keyframes estateReveal {
@@ -47,5 +228,53 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes estateOrbFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.08);
+  }
+}
+
+@media (max-width: 820px) {
+  .estate__rule {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 24px 20px;
+  }
+
+  .estate__rule-index {
+    position: static;
+  }
+
+  .estate__rule-index span {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+  }
+
+  .estate__rule-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .estate__lead {
+    font-size: 16px;
+  }
+
+  .estate__rule h2 {
+    font-size: 28px;
+  }
+
+  .estate__note,
+  .estate__block {
+    padding: 16px;
   }
 }
