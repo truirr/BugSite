@@ -12,6 +12,7 @@ import Composition from './pages/Composition/Composition'
 import Promotion from './pages/Promotion/Promotion'
 import Gallery from './pages/Gallery/Gallery'
 import Information from './pages/Information/Information'
+import PromotionInfo from './pages/PromotionInfo/PromotionInfo'
 
 import './App.css'
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/promotion" element={<Promotion />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/information" element={<Information />} />
+          <Route path="/promotion-info" element={<PromotionInfo />} />
         </Routes>
       </main>
     </>
