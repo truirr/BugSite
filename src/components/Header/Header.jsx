@@ -1,15 +1,27 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import './Header.css'
 
 const links = [
   { to: '/', label: 'Главная' },
-  { to: '/first-aid', label: 'ПМП' },
+  {
+    label: 'Лечение',
+    baseTo: '/first-aid',
+    activePaths: ['/first-aid', '/anatomy', '/medical-information'],
+    children: [
+      { to: '/first-aid', label: 'ПМП' },
+      { to: '/anatomy', label: 'Анатомия' },
+      { to: '/medical-information', label: 'Мед. информация' },
+    ],
+  },
+  { to: '/tests', label: 'Тесты' },
   { to: '/estate', label: 'Поместье' },
   { to: '/composition', label: 'Состав' },
   {
     label: 'Повышение',
+    baseTo: '/promotion',
+    activePaths: ['/promotion', '/promotion-info'],
     children: [
       { to: '/promotion', label: 'Система повышения' },
       { to: '/promotion-info', label: 'Доп. информация' },
@@ -21,6 +33,7 @@ const links = [
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
 
   const closeMenu = () => setIsOpen(false)
 
@@ -44,13 +57,15 @@ function Header() {
       <nav className={`header__nav ${isOpen ? 'header__nav--open' : ''}`}>
         {links.map((link) => {
           if (link.children) {
+            const isDropdownActive = link.activePaths?.includes(location.pathname)
+
             return (
               <div className="header__dropdown" key={link.label}>
                 <NavLink
-                  to="/promotion"
+                  to={link.baseTo}
                   onClick={closeMenu}
-                  className={({ isActive }) =>
-                    isActive
+                  className={
+                    isDropdownActive
                       ? 'header__link header__link--active header__link--dropdown'
                       : 'header__link header__link--dropdown'
                   }

@@ -9,7 +9,7 @@ const groups = [
   {
     rank: 'Цугуко',
     icon: '継',
-    members: ['Hiroto Takayama', 'Свободный слот'],
+    members: ['Hiroto Takayama', 'Риса Наосохима'],
   },
   {
     rank: 'Канао Цуюри',
@@ -19,13 +19,13 @@ const groups = [
   {
     rank: 'Инструктор',
     icon: '教',
-    members: ['Свободный слот', 'Kaito Fujimoto', 'Свободный слот'],
+    members: ['Hiroshi Akarui', 'Kaito Fujimoto', 'Свободный слот'],
   },
   {
     rank: 'Истребитель',
     icon: '滅',
     members: [
-      'Hiroshi Akarui',
+      'Свободный слот',
       'Таву Актагаву / не Рядовой ША',
       'Дзётаро Арасака / Макио',
       'Оки Мирай',
@@ -40,12 +40,12 @@ const groups = [
   {
     rank: 'Ученик',
     icon: '学',
-    members: ['Свободный слот', 'Свободный слот', 'Свободный слот'],
+    members: ['Hikaru Kusakabe', 'Свободный слот', 'Свободный слот'],
   },
   {
     rank: 'Чистильщик',
     icon: '清',
-    members: ['Кэтсэро Накамура', 'Асато Синоши'],
+    members: ['Кэтсэро Накамура'],
   },
   {
     rank: 'Донат слот',
@@ -63,13 +63,23 @@ function Composition() {
 
         <div className="composition__grid">
           {groups.map((group, index) => (
-            <article className="composition__card card" key={group.rank} style={{ '--delay': `${index * 0.07}s` }}>
+            <article
+              className="composition__card card"
+              key={group.rank}
+              style={{ '--delay': `${index * 0.07}s` }}
+            >
               <div className="composition__kanji">{group.icon}</div>
+
               <h2>{group.rank}</h2>
 
               <ul>
-                {group.members.map((member) => (
-                  <li className={member === 'Свободный слот' ? 'composition__empty' : ''} key={member + group.rank}>
+                {group.members.map((member, memberIndex) => (
+                  <li
+                    className={
+                      member === 'Свободный слот' ? 'composition__empty' : ''
+                    }
+                    key={`${group.rank}-${member}-${memberIndex}`}
+                  >
                     {member}
                   </li>
                 ))}

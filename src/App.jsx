@@ -13,6 +13,9 @@ import Promotion from './pages/Promotion/Promotion'
 import Gallery from './pages/Gallery/Gallery'
 import Information from './pages/Information/Information'
 import PromotionInfo from './pages/PromotionInfo/PromotionInfo'
+import Anatomy from './pages/Anatomy/Anatomy'
+import MedicalInformation from './pages/MedicalInformation/MedicalInformation'
+import Tests from './pages/Tests/Tests'
 
 import './App.css'
 
@@ -50,12 +53,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/first-aid" element={<FirstAid />} />
+          <Route path="/anatomy" element={<Anatomy />} />
+          <Route path="/medical-information" element={<MedicalInformation />} />
           <Route path="/estate" element={<Estate />} />
           <Route path="/composition" element={<Composition />} />
           <Route path="/promotion" element={<Promotion />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/information" element={<Information />} />
           <Route path="/promotion-info" element={<PromotionInfo />} />
+          <Route path="/tests" element={<Tests />} />
         </Routes>
       </main>
     </>

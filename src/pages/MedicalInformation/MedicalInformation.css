@@ -1,0 +1,390 @@
+.medical-info {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 131, 200, 0.16), transparent 34%),
+    radial-gradient(circle at 84% 20%, rgba(169, 133, 255, 0.16), transparent 34%),
+    linear-gradient(180deg, #08050d, #120817 52%, #05040a);
+}
+
+.medical-info::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 84%, transparent);
+}
+
+.medical-info__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.72;
+  animation: medicalInfoOrbFloat 10s ease-in-out infinite;
+}
+
+.medical-info__orb--left {
+  top: 150px;
+  left: -130px;
+  width: 360px;
+  height: 360px;
+  background: rgba(255, 131, 200, 0.14);
+}
+
+.medical-info__orb--right {
+  right: -120px;
+  bottom: 180px;
+  width: 340px;
+  height: 340px;
+  background: rgba(169, 133, 255, 0.14);
+  animation-delay: 2s;
+}
+
+.medical-info__container {
+  position: relative;
+  z-index: 2;
+}
+
+.medical-info__lead {
+  max-width: 860px;
+  margin: -8px 0 28px;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.medical-info__tabs {
+  margin-bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.medical-info__tab {
+  padding: 13px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 248, 255, 0.78);
+  font-family: var(--font-small);
+  font-size: 15px;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.medical-info__tab span {
+  font-family: serif;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.medical-info__tab:hover {
+  color: var(--white);
+  background: rgba(255, 131, 200, 0.14);
+  border-color: rgba(255, 131, 200, 0.24);
+  transform: translateY(-2px);
+}
+
+.medical-info__tab--active {
+  color: var(--white);
+  background:
+    linear-gradient(135deg, rgba(255, 131, 200, 0.34), rgba(169, 133, 255, 0.24)),
+    rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.medical-info__section {
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+  border-radius: 32px;
+  opacity: 0;
+  animation: medicalInfoReveal 0.65s ease both;
+}
+
+.medical-info__section::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(135deg, rgba(255, 131, 200, 0.16), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(169, 133, 255, 0.14), transparent 34%);
+  transition: opacity 0.28s ease;
+}
+
+.medical-info__section:hover::before {
+  opacity: 1;
+}
+
+.medical-info__section-head,
+.medical-info__description,
+.medical-info__subtabs,
+.medical-info__group {
+  position: relative;
+  z-index: 2;
+}
+
+.medical-info__section-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.medical-info__icon {
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.42), transparent 18%),
+    linear-gradient(135deg, rgba(255, 131, 200, 0.42), rgba(169, 133, 255, 0.32));
+  color: var(--white);
+  font-family: serif;
+  font-size: 34px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.25);
+}
+
+.medical-info__section-head p {
+  margin: 0 0 8px;
+  color: var(--purple-light);
+  font-family: var(--font-accent);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.medical-info__section h2 {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(34px, 4vw, 62px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.medical-info__description {
+  max-width: 980px;
+  margin: 0 0 22px;
+  color: rgba(255, 248, 255, 0.82);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.medical-info__subtabs {
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.medical-info__subtab {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: rgba(255, 248, 255, 0.72);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  font-family: var(--font-small);
+  font-size: 14px;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.medical-info__subtab:hover,
+.medical-info__subtab--active {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.13);
+  transform: translateY(-2px);
+}
+
+.medical-info__group h3 {
+  margin: 0 0 18px;
+  color: var(--purple-light);
+  font-family: var(--font-title);
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.medical-info__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.medical-info__card {
+  min-height: 210px;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+    rgba(10, 8, 16, 0.48);
+  opacity: 0;
+  animation: medicalInfoCardReveal 0.55s ease calc(0.1s + var(--delay)) both;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.medical-info__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 131, 200, 0.2);
+  background:
+    linear-gradient(135deg, rgba(255, 131, 200, 0.08), rgba(169, 133, 255, 0.04)),
+    rgba(10, 8, 16, 0.58);
+}
+
+.medical-info__card h4 {
+  margin: 0 0 12px;
+  color: var(--white);
+  font-family: var(--font-accent);
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.medical-info__card p {
+  margin: 0;
+  color: var(--text);
+  font-size: 15.5px;
+  line-height: 1.58;
+}
+
+.medical-info__card ul {
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  list-style: none;
+}
+
+.medical-info__card li {
+  position: relative;
+  padding-left: 18px;
+  color: rgba(255, 248, 255, 0.68);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.medical-info__card li::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 12px rgba(255, 131, 200, 0.45);
+}
+
+@keyframes medicalInfoReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes medicalInfoCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes medicalInfoOrbFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.08);
+  }
+}
+
+@media (max-width: 1100px) {
+  .medical-info__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .medical-info__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .medical-info__card {
+    min-height: auto;
+  }
+
+  .medical-info__section {
+    padding: 26px 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .medical-info__lead {
+    font-size: 16px;
+  }
+
+  .medical-info__tabs {
+    gap: 8px;
+  }
+
+  .medical-info__tab {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .medical-info__section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .medical-info__icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 20px;
+    font-size: 30px;
+  }
+
+  .medical-info__description {
+    font-size: 16px;
+  }
+
+  .medical-info__group h3 {
+    font-size: 30px;
+  }
+}

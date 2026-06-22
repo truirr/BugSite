@@ -9,10 +9,14 @@ import 'swiper/css/pagination'
 import gallery1 from '../../assets/img/gallery-1.jpg'
 import gallery2 from '../../assets/img/gallery-2.jpg'
 import gallery3 from '../../assets/img/gallery-3.jpg'
+import gallery4 from '../../assets/img/gallery-4.jpg'
+import gallery5 from '../../assets/img/gallery-5.jpg'
+import gallery6 from '../../assets/img/gallery-6.jpg'
+import gallery7 from '../../assets/img/gallery-7.jpg'
 
 import './Gallery.css'
 
-const images = [gallery1, gallery2, gallery3]
+const images = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7]
 
 function Gallery() {
   const [activeIndex, setActiveIndex] = useState(0)
