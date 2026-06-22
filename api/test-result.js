@@ -1,36 +1,39 @@
-import 'dotenv/config'
-
-import cors from 'cors'
-import express from 'express'
-import rateLimit from 'express-rate-limit'
-
-const app = express()
-
-const PORT = process.env.PORT || 4000
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 const DISCORD_TEST_WEBHOOK_URL = process.env.DISCORD_TEST_WEBHOOK_URL
 
-app.set('trust proxy', 1)
+const rateLimitStore = new Map()
 
-app.use(
-  cors({
-    origin: FRONTEND_URL,
-    methods: ['POST', 'GET'],
-  }),
-)
+const RATE_LIMIT_TIME = 2 * 60 * 1000
 
-app.use(express.json({ limit: '40kb' }))
+function getClientIp(req) {
+  const forwardedFor = req.headers['x-forwarded-for']
 
-const testResultLimiter = rateLimit({
-  windowMs: 2 * 60 * 1000,
-  limit: 1,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: 'Слишком много отправок результатов. Отправлять результат можно раз в 2 минуты.',
-  },
-})
+  if (typeof forwardedFor === 'string') {
+    return forwardedFor.split(',')[0].trim()
+  }
+
+  return req.socket?.remoteAddress || 'unknown'
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now()
+  const lastRequestTime = rateLimitStore.get(ip)
+
+  if (lastRequestTime && now - lastRequestTime < RATE_LIMIT_TIME) {
+    const retryAfter = Math.ceil((RATE_LIMIT_TIME - (now - lastRequestTime)) / 1000)
+
+    return {
+      allowed: false,
+      retryAfter,
+    }
+  }
+
+  rateLimitStore.set(ip, now)
+
+  return {
+    allowed: true,
+    retryAfter: 0,
+  }
+}
 
 function cleanText(value, maxLength = 500) {
   if (typeof value !== 'string') return ''
@@ -103,19 +106,29 @@ function validateResult(body) {
   }
 }
 
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Bugsite test webhook backend is running.',
-  })
-})
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({
+      success: false,
+      message: 'Метод не разрешён.',
+    })
+  }
 
-app.post('/api/test-result', testResultLimiter, async (req, res) => {
   try {
     if (!DISCORD_TEST_WEBHOOK_URL) {
       return res.status(500).json({
         success: false,
-        message: 'DISCORD_TEST_WEBHOOK_URL не указан в .env.',
+        message: 'DISCORD_TEST_WEBHOOK_URL не указан в переменных Vercel.',
+      })
+    }
+
+    const ip = getClientIp(req)
+    const rateLimit = checkRateLimit(ip)
+
+    if (!rateLimit.allowed) {
+      return res.status(429).json({
+        success: false,
+        message: `Слишком много отправок. Попробуйте снова через ${rateLimit.retryAfter} сек.`,
       })
     }
 
@@ -199,7 +212,7 @@ app.post('/api/test-result', testResultLimiter, async (req, res) => {
       })
     }
 
-    return res.json({
+    return res.status(200).json({
       success: true,
       message: 'Результат теста отправлен в Discord.',
     })
@@ -211,8 +224,4 @@ app.post('/api/test-result', testResultLimiter, async (req, res) => {
       message: 'Ошибка сервера при отправке результата.',
     })
   }
-})
-
-app.listen(PORT, () => {
-  console.log(`Bugsite backend started on http://localhost:${PORT}`)
-})
+}
