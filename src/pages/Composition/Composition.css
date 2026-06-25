@@ -49,6 +49,35 @@
   color: var(--text);
 }
 
+.composition__member {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  min-width: 0;
+  color: inherit;
+}
+
+.composition__avatar {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 18px rgba(255, 131, 200, 0.16);
+}
+
+.composition__member-name {
+  min-width: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
 .composition__empty {
   color: rgba(255, 248, 255, 0.35) !important;
   font-style: italic;
