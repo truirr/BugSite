@@ -6,7 +6,7 @@ const groups = [
     icon: '柱',
     members: [
       {
-        name: '[🦝] Шинобу Кочо | Цундере Иры',
+        name: '[🦝] Шинобу Кочо | Фанатка Иры',
         avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/662723448082137098/avatars/75de770ed6f139356b526c1d4cf626b5.png?size=1024',
       },
     ],
