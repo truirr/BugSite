@@ -5,6 +5,7 @@ import Header from './components/Header/Header'
 import Loader from './components/Loader/Loader'
 import Hero from './components/Hero/Hero'
 import About from './components/About/About'
+import Footer from './components/Footer/Footer'
 
 import FirstAid from './pages/FirstAid/FirstAid'
 import Estate from './pages/Estate/Estate'
@@ -64,6 +65,8 @@ function App() {
           <Route path="/tests" element={<Tests />} />
         </Routes>
       </main>
+
+      <Footer />
     </>
   )
 }
