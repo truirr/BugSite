@@ -277,7 +277,7 @@
   }
 
   .hero__title {
-    font-size: clamp(56px, 17vw, 96px);
+    font-size: clamp(36px, 11vw, 96px);
   }
 
   .hero__quote {
