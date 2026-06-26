@@ -285,20 +285,20 @@
     z-index: 2;
 
     width: 100%;
-    max-height: calc(100dvh - 118px);
-    padding: 14px;
+    max-height: 0;
+    padding: 0 14px;
 
     display: grid;
     gap: 6px;
 
-    overflow-y: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
 
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid transparent;
     border-radius: 28px;
 
     background: rgba(8, 6, 13, 0.84);
-    box-shadow: 0 24px 90px rgba(0, 0, 0, 0.35);
+    box-shadow: none;
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
 
@@ -310,7 +310,35 @@
     transition:
       opacity 0.25s ease,
       visibility 0.25s ease,
-      transform 0.25s ease;
+      transform 0.25s ease,
+      max-height 0.25s ease,
+      padding 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .header__nav,
+  .header__nav * {
+    pointer-events: none;
+  }
+
+  .header--menu-open .header__nav {
+    max-height: calc(100dvh - 118px);
+    padding: 14px;
+    overflow-y: auto;
+
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 90px rgba(0, 0, 0, 0.35);
+
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .header--menu-open .header__nav,
+  .header--menu-open .header__nav * {
+    pointer-events: auto;
   }
 
   .header__nav::-webkit-scrollbar {
@@ -325,7 +353,6 @@
   .header__nav--open {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
     transform: translateY(0);
   }
 
@@ -359,7 +386,6 @@
 
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
     transform: none;
 
     background: rgba(255, 255, 255, 0.04);
@@ -406,10 +432,15 @@
 
   .header__nav {
     top: calc(100% + 10px);
-    max-height: calc(100dvh - 96px);
-    padding: 12px;
+    max-height: 0;
+    padding: 0 12px;
     border-radius: 24px;
     gap: 5px;
+  }
+
+  .header--menu-open .header__nav {
+    max-height: calc(100dvh - 96px);
+    padding: 12px;
   }
 
   .header__link {
@@ -460,6 +491,11 @@
 
   .header__nav {
     top: calc(100% + 8px);
+    max-height: 0;
+    padding: 0 10px;
+  }
+
+  .header--menu-open .header__nav {
     max-height: calc(100dvh - 78px);
     padding: 10px;
   }

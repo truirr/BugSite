@@ -38,7 +38,7 @@ function Header() {
   const closeMenu = () => setIsOpen(false)
 
   return (
-    <header className="header">
+    <header className={`header ${isOpen ? 'header--menu-open' : ''}`}>
       <NavLink to="/" className="header__logo" onClick={closeMenu} aria-label="На главную">
         <span className="header__butterfly"></span>
         <span>Дыхание насекомого</span>
@@ -49,6 +49,7 @@ function Header() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Открыть меню"
+        aria-expanded={isOpen}
       >
         <span></span>
         <span></span>
