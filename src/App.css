@@ -39,7 +39,7 @@
   margin: 0 0 26px;
   max-width: 900px;
   font-family: var(--font-title);
-  font-size: clamp(42px, 7vw, 96px);
+  font-size: clamp(24px, 7vw, 96px);
   line-height: 0.95;
   letter-spacing: -0.04em;
   text-transform: uppercase;
