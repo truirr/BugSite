@@ -16,12 +16,12 @@ const groups = [
     icon: '継',
     members: [
       {
-        name: 'Hiroto Takayama',
-        avatar: 'https://cdn.discordapp.com/avatars/771841169259757619/416d747e9a2fac2d9e5ae2492d954703.png?size=1024',
+        name: 'Лейл Мэй',
+        avatar: 'https://cdn.discordapp.com/avatars/543714854402261012/6d4c52825da52aef0063b6b07c852e12.png?size=1024',
       },
       {
-        name: 'Риса Наосохима',
-        avatar: 'https://cdn.discordapp.com/avatars/814508220675653642/31908d0de7c0bbf06f2fbfbfcb310da1.png?size=1024',
+        name: 'Ая Наосохима',
+        avatar: 'https://cdn.discordapp.com/avatars/814508220675653642/51974c5055c9a50a145942b5d385efaa.png?size=1024',
       },
     ],
   },
@@ -30,8 +30,8 @@ const groups = [
     icon: '花',
     members: [
       {
-        name: 'Kanao | Musasi Hagivara',
-        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/769528396563611648/avatars/82cad9a851430e09ea6423dc6504cda2.png?size=1024',
+        name: 'Канао Рёмен || Аманэ',
+        avatar: 'https://cdn.discordapp.com/avatars/1396831997158096977/6b2475ea94a6867e047d9f6d81c4b0c2.png?size=1024',
       },
     ],
   },
@@ -44,12 +44,12 @@ const groups = [
         avatar: 'https://cdn.discordapp.com/avatars/557522859849940992/c6e34afe29072e9079a410f26923e189.png?size=1024',
       },
       {
-        name: 'Лейл Мэй',
-        avatar: 'https://cdn.discordapp.com/avatars/543714854402261012/76d252c8a9311c062680a735ed8a1e3a.png?size=1024',
+        name: 'Свободный слот',
+        avatar: '',
       },
       {
-        name: 'Ясу Таида',
-        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/979416779182977115/avatars/26cd272aed958c1ed67b01a7e0b4ae74.png?size=1024',
+        name: 'Свободный слот',
+        avatar: '',
       },
     ],
   },
@@ -59,39 +59,39 @@ const groups = [
     members: [
       {
         name: 'Асуми Хидака',
-        avatar: 'https://cdn.discordapp.com/avatars/1511724724823265371/483c641c5f1f6fda2ae0572c6dfdae5d.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/avatars/1511724724823265371/11505169fa5dad2a2213f0a6de550d9c.png?size=1024',
       },
       {
-        name: 'Свободный слот',
-        avatar: '',
+        name: 'Isin Tokasaki',
+        avatar: 'https://cdn.discordapp.com/avatars/887747399001452575/a_afc5896a460dc97248102a0ae466a8bf.gif?size=1024',
       },
       {
-        name: 'Дзётаро Арасака',
-        avatar: 'https://cdn.discordapp.com/avatars/595954098248089601/b24c15fd54f190bcb52ca36fb7c31620.png?size=1024',
+        name: 'Ая Они',
+        avatar: 'https://cdn.discordapp.com/avatars/1246322198289842236/ac3e9ff327581070c6477feed29561c9.png?size=1024',
       },
       {
         name: 'Оки Мирай',
-        avatar: 'https://cdn.discordapp.com/avatars/444880330545954819/f3cf12ee98d0d64a3833b8949edf8bb0.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/444880330545954819/avatars/03e3908288ebebf04dc21dbe08a521c2.png?size=1024',
       },
       {
         name: 'Kaito Fujimoto',
-        avatar: 'https://cdn.discordapp.com/avatars/1436828265284112577/4d3bf59673736b5a8868f1dcbb524beb.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/avatars/1436828265284112577/f1b2d50e202ecd1fdc5a796c4c721e0e.png?size=1024',
       },
       {
         name: 'Свободный слот',
         avatar: '',
       },
       {
-        name: 'Свободный слот',
-        avatar: '',
+        name: 'Kyouya Shirakawa',
+        avatar: 'https://cdn.discordapp.com/avatars/575358187503484958/1b2341ff06e06fd03d9b5325fe1c4e2e.png?size=1024',
+      },
+      {
+        name: 'Хёга Рю',
+        avatar: 'https://cdn.discordapp.com/avatars/1070619979575214130/1d9f6865b16b8077cb40df4eae53ed8b.png?size=1024',
       },
       {
         name: 'Свободный слот',
         avatar: '',
-      },
-      {
-        name: 'Аманэ / Hinami Matsuda',
-        avatar: 'https://cdn.discordapp.com/avatars/1396831997158096977/a4792aec92ebe001083e3ba116c9022f.png?size=1024',
       },
       {
         name: 'Theotto Rikko',
@@ -105,7 +105,7 @@ const groups = [
     members: [
       {
         name: 'Hikaru Kusakabe',
-        avatar: 'https://cdn.discordapp.com/avatars/351978445707673601/9d638a20d36045d8b9f15a8b8dfdd8e4.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/avatars/351978445707673601/ab0bda477f6623196351bfb84126d4dc.png?size=1024',
       },
       {
         name: 'Свободный слот',
@@ -136,7 +136,7 @@ const groups = [
     icon: '蝶',
     members: [
       {
-        name: 'Miko Fujiwara',
+        name: 'Ritsuka Uenoyama',
         avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/922568676908077116/avatars/a_cd4e85d76000718f2bcb42e3589bd2b7.gif?size=1024',
       },
     ],
