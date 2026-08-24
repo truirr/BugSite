@@ -7,7 +7,7 @@ const groups = [
     members: [
       {
         name: '[🦝] Шинобу Кочо | Фанатка Иры',
-        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/662723448082137098/avatars/75de770ed6f139356b526c1d4cf626b5.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/662723448082137098/avatars/ba6fa3f8f5a484c3d56decdc94a64db1.png?size=1024',
       },
     ],
   },
