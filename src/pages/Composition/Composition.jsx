@@ -127,7 +127,7 @@ const groups = [
       },
       {
         name: 'Тиша Ито',
-        avatar: 'https://cdn.discordapp.com/avatars/414828581626052608/5a704d34fe20aedb6673a5765c072d5e.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/avatars/414828581626052608/b489d4305e9afb57ee440a1e11c55ce6.png?size=1024',
       },
     ],
   },
