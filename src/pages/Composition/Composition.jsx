@@ -41,7 +41,7 @@ const groups = [
     members: [
       {
         name: 'Hiroshi Akarui',
-        avatar: 'https://cdn.discordapp.com/avatars/557522859849940992/c6e34afe29072e9079a410f26923e189.png?size=1024',
+        avatar: 'https://cdn.discordapp.com/avatars/557522859849940992/24edf4a1bbe7acadbbf497ceaf7f8378.png?size=1024',
       },
       {
         name: 'Свободный слот',
