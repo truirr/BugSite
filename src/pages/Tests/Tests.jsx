@@ -668,7 +668,7 @@ const specialTests = [
           'Никем',
           'Этого нет в лоре',
         ],
-        answer: 1,
+        answer: 0,
       },
 
       {
@@ -724,7 +724,7 @@ const specialTests = [
           'Подарил Гию',
           'Досталось от Канаэ',
         ],
-        answer: 0,
+        answer: 3,
       },
 
       {
