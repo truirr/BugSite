@@ -20,6 +20,10 @@
   mask-image: linear-gradient(180deg, transparent, #000 18%, #000 84%, transparent);
 }
 
+.tests__container {
+  width: min(100% - 32px, 1730px) !important;
+}
+
 .tests__orb {
   position: absolute;
   border-radius: 50%;
