@@ -166,7 +166,7 @@ const tests = [
   title: 'ПМП — Тактическая медицина',
   icon: '戦',
   description:
-    'Расширенный тест по первой помощи и тактической медицине. В базе 20 вопросов, в каждом прохождении случайно выбираются 14.',
+    'Расширенный тест по первой помощи и тактической медицине.',
   questionLimit: 14,
   questions: [
     {
@@ -1014,7 +1014,7 @@ function Tests() {
                 <strong>{test.title}</strong>
                 <small>{test.description}</small>
                 <em>
-                  {test.randomCount || test.questionLimit || test.questions.length} вопросов
+                  {test.randomCount || test.questions.length} вопросов
                 </em>
               </span>
             </button>
