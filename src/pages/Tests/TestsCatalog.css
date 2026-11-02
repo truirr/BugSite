@@ -1,0 +1,234 @@
+/* Каталог тестов. Стили окна прохождения находятся в Tests.css. */
+.tests__title {
+  max-width: 1100px;
+  margin: 20px 0;
+  font: 600 clamp(34px, 4.6vw, 72px) / 1.15 var(--font-title);
+  letter-spacing: -0.035em;
+}
+
+.tests__lead {
+  max-width: 690px;
+  margin: 0 0 48px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.tests__list-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 4px 18px;
+  color: var(--muted);
+  font: 12px var(--font-small);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tests__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.tests__card {
+  width: 100%;
+  min-width: 0;
+  min-height: 140px;
+  display: grid;
+  grid-template-columns: 32px 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 26px;
+  padding: 26px 32px;
+  border: 1px solid rgba(210, 184, 244, 0.14);
+  border-radius: 20px;
+  background: linear-gradient(
+    110deg,
+    rgba(206, 176, 255, 0.07),
+    rgba(255, 255, 255, 0.02)
+  );
+  color: var(--white);
+  text-align: left;
+  animation: testsCardReveal 0.5s ease calc(0.04s + var(--delay)) backwards;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.tests__card:hover {
+  transform: translateX(3px);
+  border-color: rgba(193, 153, 247, 0.5);
+  background: linear-gradient(
+    110deg,
+    rgba(182, 132, 245, 0.14),
+    rgba(255, 255, 255, 0.03)
+  );
+}
+
+.tests__card:focus-visible {
+  outline: 2px solid var(--purple-light);
+  outline-offset: 4px;
+}
+
+.tests__number {
+  color: rgba(220, 201, 244, 0.4);
+  font: 13px var(--font-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.tests__icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(206, 174, 255, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(185, 133, 242, 0.2),
+    rgba(185, 133, 242, 0.04)
+  );
+  color: #d9b9ff;
+  font: 30px serif;
+}
+
+.tests__card-content {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.tests__card-content strong {
+  color: var(--white);
+  font: 600 clamp(20px, 1.8vw, 28px) / 1.35 var(--font-title);
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+.tests__card-content small {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.tests__card-meta {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-left: 18px;
+  white-space: nowrap;
+}
+
+.tests__count {
+  color: #c6b2df;
+  font: 13px var(--font-small);
+}
+
+.tests__start {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  color: var(--purple-light);
+  font-size: 14px;
+}
+
+.tests__start > span {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(206, 174, 255, 0.25);
+  border-radius: 50%;
+  font-size: 23px;
+  transition: background 0.25s ease;
+}
+
+.tests__card:hover .tests__start > span {
+  background: rgba(185, 133, 242, 0.2);
+}
+
+.tests__card--combined {
+  border-color: rgba(193, 153, 247, 0.3);
+  background: linear-gradient(
+    110deg,
+    rgba(182, 132, 245, 0.14),
+    rgba(255, 131, 200, 0.04)
+  );
+}
+
+@media (max-width: 1100px) {
+  .tests__card {
+    grid-template-columns: 54px minmax(0, 1fr) auto;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .tests__number {
+    display: none;
+  }
+
+  .tests__icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .tests__card-meta {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .tests__card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .tests__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    font-size: 24px;
+    align-self: start;
+  }
+
+  .tests__card-content strong {
+    font-size: 19px;
+  }
+
+  .tests__card-content small {
+    font-size: 14px;
+  }
+
+  .tests__card-meta {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(210, 184, 244, 0.1);
+    padding-top: 14px;
+  }
+
+  .tests__lead {
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tests__card,
+  .tests__start > span {
+    animation: none;
+    transition: none;
+  }
+
+  .tests__card:hover {
+    transform: none;
+  }
+}

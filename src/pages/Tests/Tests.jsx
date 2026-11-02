@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import useContent from '../../lib/useContent'
 import './Tests.css'
+import './TestsCatalog.css'
 
 export default function Tests() {
   const { content, error: loadError } = useContent()
@@ -119,27 +120,43 @@ export default function Tests() {
     <section className="tests page">
       <div className="page__container tests__container">
         <p className="page__eyebrow">Knowledge Check</p>
-        <h1 className="page__title">Тестирование</h1>
+        <h1 className="tests__title">Проверь свои знания</h1>
         <p className="tests__lead">
-          Выбери тест, укажи имя и должность. Результат проверяется на сервере и
-          отправляется в Discord.
+          Выбери тему и пройди проверку в своём темпе. В конце ты увидишь
+          результат, а команда получит его в Discord.
         </p>
         {loadError && <p role="alert">{loadError}</p>}
         {!content && !loadError && <p role="status">Загружаем тесты…</p>}
         {content && !tests.length && <p>Тесты скоро появятся.</p>}
+        {list.length > 0 && (
+          <div className="tests__list-heading">
+            <span>Выбери свой раздел</span>
+            <span>{String(list.length).padStart(2, '0')} тестов</span>
+          </div>
+        )}
         <div className="tests__grid">
           {list.map((test, i) => (
             <button
-              className="tests__card card"
+              className={`tests__card ${test.id === 'combined' ? 'tests__card--combined' : ''}`}
               key={test.id}
               onClick={(e) => open(test, e)}
               style={{ '--delay': `${i * 0.06}s` }}
             >
-              <span className="tests__icon">{test.icon}</span>
+              <span className="tests__number" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className="tests__icon" aria-hidden="true">
+                {test.icon}
+              </span>
               <span className="tests__card-content">
                 <strong>{test.title}</strong>
                 <small>{test.description}</small>
-                <em>{test.count} вопросов</em>
+              </span>
+              <span className="tests__card-meta">
+                <span className="tests__count">{test.count} вопросов</span>
+                <span className="tests__start" aria-hidden="true">
+                  Пройти тест <span>↗</span>
+                </span>
               </span>
             </button>
           ))}
