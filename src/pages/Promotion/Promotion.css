@@ -1,144 +1,562 @@
+/* Страница повышения: декоративный фон и общая типографика. */
 .promotion {
+  position: relative;
+  overflow: hidden;
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255, 131, 200, 0.18),
-      transparent 36%
-    ),
-    linear-gradient(180deg, #08050d, #120816 50%, #05040a);
+    radial-gradient(ellipse at 80% 8%, #9f65c924, transparent 35%),
+    linear-gradient(180deg, #0e0916, #08060d);
 }
 
+.promotion__container {
+  position: relative;
+  z-index: 1;
+}
+.promotion__ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.promotion__ambient span {
+  position: absolute;
+  color: #c99fff24;
+  font: 90px serif;
+  animation: promotionDrift 14s ease-in-out infinite;
+}
+.promotion__ambient span:nth-child(1) {
+  top: 300px;
+  right: 8%;
+}
+.promotion__ambient span:nth-child(2) {
+  top: 900px;
+  left: 2%;
+  font-size: 45px;
+  animation-delay: -5s;
+}
+.promotion__ambient span:nth-child(3) {
+  top: 1600px;
+  right: 3%;
+  font-size: 65px;
+  animation-delay: -9s;
+}
+.promotion__intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 54px;
+}
+.promotion__intro h1 {
+  margin: 20px 0;
+  font: 600 clamp(36px, 5vw, 76px)/1.15 var(--font-title);
+  letter-spacing: -0.04em;
+}
+.promotion__intro h1 span {
+  color: #c3a0ed;
+}
+.promotion__intro p:not(.page__eyebrow) {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.8;
+}
+.promotion__crest {
+  width: 220px;
+  height: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c39be64d;
+  border-radius: 50%;
+  outline: 1px solid #c39be61a;
+  outline-offset: 15px;
+  background: radial-gradient(circle, #bb81ef18, transparent 70%);
+  animation: promotionDrift 9s ease-in-out infinite;
+}
+.promotion__crest > span {
+  color: #c9a4f1;
+  font: 100px serif;
+}
+.promotion__crest small {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.promotion__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 20px;
+  border: 1px solid #c19bea55;
+  border-radius: 12px;
+  background: #a26bda20;
+  color: #e4ceff;
+  line-height: 1.5;
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+}
+.promotion__button:hover {
+  background: #a26bda40;
+  border-color: #c19bea;
+}
+.promotion__muted {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.promotion :is(button, a, input, select, summary):focus-visible {
+  outline: 2px solid var(--purple-light);
+  outline-offset: 4px;
+}
+.promotion button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Лента рангов и выбор перехода. */
 .promotion__ranks {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 10px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 64px;
 }
-
 .promotion__rank {
-  min-height: 132px;
-  padding: 18px 10px;
-  display: grid;
-  place-items: center;
+  padding: 20px 5px;
+  border: 1px solid #c5a3e526;
+  border-radius: 16px;
   text-align: center;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.06);
-  opacity: 0;
-  animation: rankReveal 0.58s ease calc(0.1s + var(--delay)) both;
+  background: #ffffff03;
+  transition:
+    background 0.35s,
+    border-color 0.35s;
 }
-
 .promotion__rank span {
-  font-family: serif;
-  font-size: 44px;
-  color: var(--purple-light);
-  text-shadow: 0 0 20px rgba(169, 133, 255, 0.35);
+  color: #bf9de5;
+  font: 32px serif;
+}
+.promotion__rank p {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+.promotion__rank--target {
+  background: #aa72df20;
+  border-color: #c5a3e588;
+  box-shadow: 0 0 28px #bd87ed12;
+}
+.promotion__selection {
+  scroll-margin-top: 130px;
+  margin-bottom: 28px;
+}
+.promotion__section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.promotion__section-heading h2 {
+  margin: 10px 0;
+  font: 600 clamp(22px, 2.3vw, 34px)/1.4 var(--font-title);
+}
+.promotion__section-heading h2 span {
+  color: #b18bd3;
+}
+.promotion__section-heading a {
+  color: #cfafea;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.promotion__badge {
+  color: #d1b3ed;
+  border: 1px solid #c5a3e533;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.promotion__selectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.promotion__field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text);
+}
+.promotion__field :is(input, select) {
+  min-width: 0;
+  width: 100%;
+  padding: 13px 12px;
+  border: 1px solid #c5a3e540;
+  border-radius: 12px;
+  background: #120c1b;
+  color: var(--white);
+  font: inherit;
+  color-scheme: dark;
+}
+.promotion__field small {
+  color: var(--muted);
+  line-height: 1.6;
 }
 
-.promotion__rank p {
-  margin: 8px 0 0;
+/* Задания слева, независимая панель расчёта справа. */
+.promotion-calculator {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 28px;
+  align-items: start;
+}
+.promotion-calculator__form {
+  min-width: 0;
+}
+.promotion-checklist {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 26px 0;
+  list-style: none;
+}
+.promotion-checklist__item {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid #c5a3e526;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #b48ed80a, #ffffff03);
+  transition:
+    background 0.3s,
+    border-color 0.3s;
+}
+.promotion-checklist__item--done {
+  border-color: #92d8bc55;
+  background: #72bc9b0a;
+}
+.promotion-checklist__item--waived {
+  border-color: #c5a3e57a;
+  background: #af7fdb15;
+}
+.promotion-checklist__number {
+  color: #a98ebd;
+  font: 13px var(--font-small);
+  padding-top: 5px;
+}
+.promotion-checklist__body {
+  flex: 1;
+  min-width: 0;
+}
+.promotion-checklist__body p {
+  margin: 0 0 18px;
   color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.promotion-checklist__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.promotion-checklist__actions button {
+  padding: 8px 12px;
+  border: 1px solid #ffffff20;
+  border-radius: 9px;
+  background: #ffffff05;
+  color: var(--muted);
+  font-size: 12px;
+}
+.promotion-checklist__actions button[aria-pressed='true'] {
+  color: #e3c9ff;
+  border-color: #c5a3e566;
+  background: #b986e51a;
+}
+.promotion-calculator__summary {
+  position: sticky;
+  top: 130px;
+  padding: 26px;
+  border: 1px solid #b98bde50;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #271a36, #140e1d);
+  box-shadow: 0 20px 70px #0003;
+}
+.promotion-calculator__summary h3 {
+  font: 600 20px/1.5 var(--font-title);
+  margin: 12px 0 24px;
+}
+.promotion__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.promotion__checkbox input {
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: #bd93e5;
+}
+.promotion-calculator__allowance {
+  color: #cfb0ec;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.promotion-calculator__allowance strong {
+  color: #f0dfff;
+}
+.promotion-calculator__result {
+  border-top: 1px solid #c5a3e530;
+  margin-top: 24px;
+  padding-top: 24px;
+}
+.promotion-calculator__remaining {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.promotion-calculator__remaining strong {
+  font: 52px var(--font-title);
+  color: #dac0f4;
+}
+.promotion-calculator__remaining span {
+  color: var(--muted);
+  font-size: 14px;
+}
+.promotion-calculator__progress {
+  height: 6px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff12;
+  margin: 20px 0;
+}
+.promotion-calculator__progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #a876db, #d3b7fa);
+  transition: width 0.4s ease;
+}
+.promotion-calculator__result dl div {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.promotion-calculator__result dd {
+  color: var(--white);
+}
+.promotion__warning {
+  color: #e8bd89;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.promotion__success {
+  color: #a6ddc4;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.promotion__reset {
+  background: none;
+  color: #baa5cc;
+  padding: 10px 0;
+  border-bottom: 1px solid #baa5cc40;
   font-size: 13px;
 }
 
-.promotion__timeline {
+/* Справочные карточки и полный список переходов. */
+.promotion__recommendations,
+.promotion__reference {
+  margin-top: 68px;
+}
+.promotion__recommendation-grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
-
+.promotion__recommendation {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border: 1px solid #b98bde30;
+  border-radius: 20px;
+  background: #a576ce09;
+}
+.promotion__recommendation::after {
+  content: '✧';
+  position: absolute;
+  right: 18px;
+  top: 20px;
+  font-size: 50px;
+  color: #c6a5e52b;
+  animation: promotionGlow 6s ease-in-out infinite;
+}
+.promotion__recommendation > span {
+  color: #bb94e1;
+  font-size: 13px;
+}
+.promotion__recommendation h3 {
+  font: 600 24px var(--font-title);
+  margin: 18px 0;
+}
+.promotion__recommendation p,
+.promotion__recommendation small {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.promotion__recommendation small {
+  display: block;
+  padding-top: 14px;
+  border-top: 1px solid #ffffff12;
+}
 .promotion__step {
-  padding: 26px;
-  opacity: 0;
-  animation: stepReveal 0.65s ease calc(0.15s + var(--delay)) both;
+  border: 1px solid #c5a3e526;
+  background: #ffffff03;
+  border-radius: 16px;
+  margin: 12px 0;
+  padding: 0 24px;
 }
-
-.promotion__step-head {
+.promotion__step summary {
   display: flex;
+  gap: 22px;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
 }
-
-.promotion__step h2 {
+.promotion__step summary::-webkit-details-marker {
+  display: none;
+}
+.promotion__step summary > span {
+  color: #b38cd4;
+  font-size: 13px;
+}
+.promotion__step h3 {
+  flex: 1;
   margin: 0;
-  font-family: var(--font-title);
-  font-size: clamp(28px, 4vw, 46px);
-  letter-spacing: -0.035em;
+  font: 500 20px/1.5 var(--font-accent);
 }
-
-.promotion__step-head span {
-  color: var(--pink);
-  font-size: 28px;
+.promotion__step .promotion__step-plus {
+  font-size: 24px;
+  transition: transform 0.25s;
 }
-
-.promotion__step ul {
-  margin: 0;
-  padding-left: 22px;
+.promotion__step[open] .promotion__step-plus {
+  transform: rotate(45deg);
+}
+.promotion__step ol {
+  margin: 0 0 24px;
+  padding-left: 24px;
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.9;
+}
+.promotion__step li {
+  margin-bottom: 10px;
+}
+.promotion__step > button {
+  margin-bottom: 24px;
+}
+.promotion__footnote {
+  border-top: 1px solid #c5a3e530;
+  margin-top: 40px;
+  padding-top: 28px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.promotion__footnote strong,
+.promotion__footnote a {
+  color: #d5b3f0;
 }
 
-.promotion__info {
-  margin-top: 18px;
-  padding: 30px;
-}
-
-.promotion__info h2 {
-  margin: 0 0 14px;
-  font-family: var(--font-title);
-  font-size: 42px;
-}
-
-.promotion__info p {
-  margin: 0;
-  color: var(--text);
-  line-height: 1.7;
-}
-
-.promotion__info p + p {
-  margin-top: 12px;
-}
-
-@keyframes rankReveal {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
+@keyframes promotionDrift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
   }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  50% {
+    transform: translateY(-12px) rotate(3deg);
   }
 }
-
-@keyframes stepReveal {
-  from {
-    opacity: 0;
-    transform: translateX(-18px);
+@keyframes promotionGlow {
+  0%,
+  100% {
+    opacity: 0.35;
   }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  50% {
+    opacity: 0.85;
   }
 }
-
 @media (max-width: 1100px) {
   .promotion__ranks {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .promotion-calculator {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 20px;
+  }
+  .promotion__crest {
+    width: 170px;
+    height: 170px;
   }
 }
-
-@media (max-width: 620px) {
-  .promotion__ranks {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 800px) {
+  .promotion__crest {
+    display: none;
   }
-
-  .promotion__step-head {
+  .promotion-calculator {
+    grid-template-columns: 1fr;
+  }
+  .promotion-calculator__summary {
+    position: static;
+    grid-row: 1;
+  }
+  .promotion__section-heading {
     flex-wrap: wrap;
   }
-
-  .promotion__info h2 {
-    font-size: 23px;
+  .promotion__recommendation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .promotion__selectors {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .promotion__ranks {
+    gap: 5px;
+  }
+  .promotion__rank p {
+    font-size: 9px;
+  }
+  .promotion__rank {
+    padding: 14px 2px;
+  }
+  .promotion-checklist__item {
+    padding: 18px;
+    gap: 12px;
+  }
+  .promotion-calculator__summary {
+    padding: 20px;
+  }
+  .promotion__step {
+    padding: 0 18px;
+  }
+  .promotion__step summary {
+    gap: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .promotion *,
+  .promotion *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

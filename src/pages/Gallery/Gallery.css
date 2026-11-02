@@ -195,43 +195,6 @@
   padding-bottom: 48px;
 }
 
-.gallery .swiper-button-prev,
-.gallery .swiper-button-next {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  color: var(--white);
-  background: rgba(5, 4, 10, 0.52);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease;
-}
-
-.gallery .swiper-button-prev:hover,
-.gallery .swiper-button-next:hover {
-  transform: scale(1.08);
-  background: rgba(255, 131, 200, 0.22);
-}
-
-.gallery .swiper-button-prev::after,
-.gallery .swiper-button-next::after {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.gallery .swiper-pagination-bullet {
-  width: 9px;
-  height: 9px;
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.gallery .swiper-pagination-bullet-active {
-  background: var(--pink);
-}
-
 /* Modal */
 
 .gallery-modal {
@@ -334,32 +297,6 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-.gallery-modal .swiper-button-prev,
-.gallery-modal .swiper-button-next {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  color: var(--white);
-  background: rgba(5, 4, 10, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.gallery-modal .swiper-button-prev::after,
-.gallery-modal .swiper-button-next::after {
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.gallery-modal .swiper-pagination-bullet {
-  background: rgba(255, 255, 255, 0.62);
-}
-
-.gallery-modal .swiper-pagination-bullet-active {
-  background: var(--pink);
-}
-
 @keyframes galleryOrbFloat {
   0%,
   100% {
@@ -447,11 +384,6 @@
     transform: none;
   }
 
-  .gallery .swiper-button-prev,
-  .gallery .swiper-button-next {
-    display: none;
-  }
-
   .gallery-modal {
     padding: 14px;
   }
@@ -468,20 +400,111 @@
     height: 46px;
     font-size: 30px;
   }
+}
 
-  .gallery-modal .swiper-button-prev,
-  .gallery-modal .swiper-button-next {
-    width: 44px;
-    height: 44px;
+/* Собственная навигация Swiper: тонкие стрелки, счётчик и видимый фокус. */
+.gallery .swiper {
+  padding-bottom: 0;
+}
+.gallery-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 2px 0;
+}
+.gallery-navigation__hint {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.gallery-navigation__controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.gallery-navigation button {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c7a2ed55;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #b88be51a, #b88be506);
+  color: #dfc7fa;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    transform 0.25s;
+}
+.gallery-navigation button:hover:not(:disabled) {
+  background: #b88be530;
+  border-color: #c7a2ed;
+  transform: translateY(-2px);
+}
+.gallery-navigation button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+.gallery-navigation button:focus-visible {
+  outline: 2px solid var(--purple-light);
+  outline-offset: 4px;
+}
+.gallery-navigation__counter {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 62px;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}
+.gallery-navigation__counter strong {
+  font: 20px var(--font-accent);
+  color: #e7d5fb;
+}
+.gallery-navigation__counter > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.gallery-modal .swiper {
+  display: flex;
+  flex-direction: column;
+}
+.gallery-modal .swiper-wrapper {
+  height: calc(100% - 88px);
+}
+.gallery-modal .gallery-navigation {
+  flex: 0 0 88px;
+  position: relative;
+  z-index: 5;
+  padding: 16px 24px;
+  background: #140e1de8;
+  border-top: 1px solid #c7a2ed26;
+}
+.gallery-modal__counter {
+  display: none;
+}
+@media (max-width: 620px) {
+  .gallery-navigation__hint {
+    display: none;
   }
-
-  .gallery-modal .swiper-button-prev::after,
-  .gallery-modal .swiper-button-next::after {
-    font-size: 16px;
+  .gallery-navigation {
+    justify-content: center;
   }
-
-  .gallery-modal__counter {
-    left: 16px;
-    bottom: 16px;
+  .gallery-navigation__controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery__orb,
+  .gallery-modal,
+  .gallery-modal__content {
+    animation: none;
+  }
+  .gallery-navigation button,
+  .gallery__item img {
+    transition: none;
   }
 }

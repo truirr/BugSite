@@ -1,175 +1,212 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  promotionTracks,
+  rankNames,
+  rankSymbols,
+  recommendations,
+} from '../../data/promotion'
+import PromotionCalculator from './components/PromotionCalculator'
 import './Promotion.css'
 
-const ranks = [
-  { name: 'Midzunoto', kanji: '癸' },
-  { name: 'Midzunoe', kanji: '壬' },
-  { name: 'Kanoto', kanji: '辛' },
-  { name: 'Kanoe', kanji: '庚' },
-  { name: 'Tsuchinoto', kanji: '己' },
-  { name: 'Tsuchinoe', kanji: '戊' },
-  { name: 'Hinoto', kanji: '丁' },
-  { name: 'Hinoe', kanji: '丙' },
-  { name: 'Kinoto', kanji: '乙' },
-  { name: 'Kinoe', kanji: '甲' },
-]
+export default function Promotion() {
+  const [trackId, setTrackId] = useState(promotionTracks[0].id)
+  const [stepIndex, setStepIndex] = useState(1)
+  const track = promotionTracks.find((item) => item.id === trackId)
+  const step = track.steps[stepIndex]
 
-const promotionSteps = [
-  {
-    from: 'Midzunoto',
-    to: 'Midzunoe',
-    tasks: [
-      'Вы наконец-то встали на путь Истребителя Демонов, истребите 7 демонов.',
-      'Соберите лечебные травы и изучите их свойства (3 рп действия на каждую траву).',
-      'Примите участие в тренировке от Инструктора+*.',
-    ],
-  },
-  {
-    from: 'Midzunoe',
-    to: 'Kanoto',
-    tasks: [
-      'Важно правильно дышать, найдите малый панкун и лопните его с помощью дыхания.',
-      'Станьте частью организации, примите участие в 2-х мероприятиях.*',
-      'Время выполнить ваше первое задание, получите задание от Инструктора+.',
-    ],
-  },
-  {
-    from: 'Kanoto',
-    to: 'Kanoe',
-    tasks: [
-      'Главная задача остаётся, убейте 10 демонов и соберите с них кровь.',
-      'Чистота и опрятный вид — важно. Постирайте и погладьте вашу форму (15 рп действий).',
-      'Тренировки интереснее с товарищами, проведите честный спарринг с товарищем из вашего отряда.',
-      'Продолжайте стремиться к большему, поучаствуйте в 3-х тренировках от Инструктора+*.',
-    ],
-  },
-  {
-    from: 'Kanoe',
-    to: 'Tsuchinoto',
-    tasks: [
-      'Стремление к знаниям — ключ к успеху. Прочтите 3 книги о ядах (5 рп действий на каждую).',
-      'Будьте начеку, пропатрулируйте любую территорию вместе с другими истребителями (15 минут).',
-      'Произведите на себя хорошее впечатление, подарите что-нибудь Столпу вашего отряда (удачный /try).',
-      'Внесите свой вклад, соберите по 20 каждой лечебной травы и принесите на склад.',
-    ],
-  },
-  {
-    from: 'Tsuchinoto',
-    to: 'Tsuchinoe',
-    tasks: [
-      'Наполните себя вдохновением, приготовьте любимую еду Столпу из вашего отряда (20 рп действий).',
-      'Помните про патруль. Проведите его с товарищами из вашего отряда (15 минут).',
-      'Правильное дыхание — важно. Возьмите средний панкун и лопните его дыханием.',
-      'Ваше оружие должно быть в лучшем виде, отполируйте и заточите его (15 рп действий).',
-      'Враги — зло. Убейте 10 демонов и соберите с них кровь.',
-    ],
-  },
-  {
-    from: 'Tsuchinoe',
-    to: 'Hinoto',
-    tasks: [
-      'Важно быть полезным для фракции, выполните 2 поручения от разных Столпов.',
-      'Расслабьтесь, сядьте в беседку и помедитируйте (15 рп действий).',
-      'Поместье не может быть грязным, помойте полы на первом этаже поместья Бабочки (15 рп действий).',
-      'Покажите себя, сразитесь с Инструктором+.',
-      'Укрепляя тело, мы становимся сильнее. Поучаствуйте в 3-х тренировках от Инструктора+*.',
-    ],
-  },
-  {
-    from: 'Hinoto',
-    to: 'Hinoe',
-    tasks: [
-      'Время познакомиться с членами Семьи Убуяшики, подарите подарок Сенсоу/Кагае.*',
-      'Взаимодействия внутри отряда не менее важны. Послушайте лекцию о лечении от Инструктора+ вашего отряда.*',
-      'Ваше тело — крепкий орешек. Выполняйте физические комплексные упражнения (10 минут).',
-      'Помогать фракции — ваш долг. Возьмите товарищей и отправьтесь на патруль (15 минут).',
-      'Прогуляйтесь, соберите по 25 каждой лечебной травы и отнесите на склад.',
-    ],
-  },
-  {
-    from: 'Hinoe',
-    to: 'Kinoto',
-    tasks: [
-      'Вы стали сильнее, покажите себя в бою с Инструктором+ вашего отряда.',
-      'Изучите книгу о шитье, сшейте какую-нибудь вещь (30 рп действий).',
-      'Попробуйте себя в роли повыше, проведите тренировку под присмотром Инструктора+.',
-      'Кровь демонов помогает нам в расследованиях, убейте 15 демонов и соберите с них кровь.',
-      'Помогите вашим товарищам из отряда, возьмите одежду одного из них, постирайте и погладьте (15 рп действий).',
-      'Важно быть полезным фракции, выполните 3 поручения от разных Столпов.',
-    ],
-  },
-  {
-    from: 'Kinoto',
-    to: 'Kinoe',
-    tasks: [
-      'Получите одобрение на повышение от Сенсоу/Кагае Убуяшики.',
-      'Вы стали сильнее, поучаствуйте в 7 тренировках от Инструктора+*.',
-      'Будьте сконцентрированы, сядьте в беседке на территории поместья Бабочки и помедитируйте (25 рп действий).',
-      'Патрули важны для нашей организации, возьмите товарищей и проведите патруль по территориям (20 минут).',
-      'Произведите хорошее впечатление, сделайте подарок одному из Столпов вашего отряда (удачный /try).',
-      'Вы часть организации, поучаствуйте в 5 мероприятиях.*',
-      'Пора показать чего вы стоите, сразитесь со Столпом из вашего отряда в честном бою!',
-    ],
-  },
-]
+  function changeTrack(nextTrackId) {
+    setTrackId(nextTrackId)
+    setStepIndex(0)
+  }
 
-function Promotion() {
   return (
     <section className="promotion page">
-      <div className="page__container">
-        <p className="page__eyebrow">Rank System</p>
-        <h1 className="page__title">Система повышения</h1>
+      <div className="promotion__ambient" aria-hidden="true">
+        <span>蝶</span>
+        <span>✦</span>
+        <span>✧</span>
+      </div>
+      <div className="page__container promotion__container">
+        <header className="promotion__intro">
+          <div>
+            <p className="page__eyebrow">Butterfly / Путь истребителя</p>
+            <h1>
+              Каждый ранг.
+              <br />
+              <span>новая ступень.</span>
+            </h1>
+            <p>
+              Требования, рекомендации и твой прогресс. Выбери переход и узнай,
+              что осталось до следующего звания.
+            </p>
+            <a href="#promotion-selection" className="promotion__button">
+              Рассчитать повышение ↓
+            </a>
+          </div>
+          <div className="promotion__crest" aria-hidden="true">
+            <span>昇</span>
+            <small>ОТ ПЕРВОГО ШАГА К МАСТЕРСТВУ</small>
+          </div>
+        </header>
 
-        <div className="promotion__ranks">
-          {ranks.map((rank, index) => (
+        <div
+          className="promotion__ranks"
+          aria-label="Ранги от младшего к старшему"
+        >
+          {rankNames.map((name, index) => (
             <div
-              className="promotion__rank"
-              key={rank.name}
-              style={{ '--delay': `${index * 0.06}s` }}
+              className={`promotion__rank ${step.to === name ? 'promotion__rank--target' : ''}`}
+              key={name}
             >
-              <span>{rank.kanji}</span>
-              <p>{rank.name}</p>
+              <span>{rankSymbols[index]}</span>
+              <p>{name}</p>
             </div>
           ))}
         </div>
 
-        <div className="promotion__timeline">
-          {promotionSteps.map((step, index) => (
-            <article
-              className="promotion__step card"
-              key={step.from}
-              style={{ '--delay': `${index * 0.07}s` }}
-            >
-              <div className="promotion__step-head">
-                <h2>{step.from}</h2>
-                <span>→</span>
-                <h2>{step.to}</h2>
-              </div>
-
-              <ul>
-                {step.tasks.map((task) => (
-                  <li key={task}>{task}</li>
+        <section
+          className="promotion__selection"
+          id="promotion-selection"
+          aria-labelledby="promotion-select-heading"
+        >
+          <div className="promotion__section-heading">
+            <div>
+              <p className="page__eyebrow">01 / Составь свой план</p>
+              <h2 id="promotion-select-heading">Следующее повышение</h2>
+            </div>
+            <Link to="/promotion-info">Устав и рекомендации ↗</Link>
+          </div>
+          <div className="promotion__selectors">
+            <label className="promotion__field">
+              Раздел системы повышения
+              <select
+                value={trackId}
+                onChange={(event) => changeTrack(event.target.value)}
+              >
+                {promotionTracks.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
                 ))}
-              </ul>
-            </article>
-          ))}
-        </div>
+              </select>
+            </label>
+            <label className="promotion__field">
+              Текущий ранг → следующий ранг
+              <select
+                value={stepIndex}
+                onChange={(event) => setStepIndex(Number(event.target.value))}
+              >
+                {track.steps.map((item, index) => (
+                  <option value={index} key={item.from}>
+                    {item.from} → {item.to}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <p className="promotion__muted">
+            Выбери свою должность: Истребитель, Инструктор или Цугуко. Для
+            каждого раздела действует свой список заданий.
+          </p>
+        </section>
 
-        <article className="promotion__info card">
-          <h2>Дополнительная информация</h2>
+        {/* key создаёт независимый расчёт при переключении раздела или ранга. */}
+        <PromotionCalculator key={`${trackId}-${stepIndex}`} step={step} />
+
+        <section
+          className="promotion__recommendations"
+          aria-labelledby="recommendations-heading"
+        >
+          <div className="promotion__section-heading">
+            <div>
+              <p className="page__eyebrow">02 / Поддержка на пути</p>
+              <h2 id="recommendations-heading">
+                Одна рекомендация. Три степени.
+              </h2>
+            </div>
+            <span className="promotion__badge">Срок действия — 72 часа</span>
+          </div>
+          <div className="promotion__recommendation-grid">
+            {recommendations.map((item) => (
+              <article key={item.degree} className="promotion__recommendation">
+                <span>{item.title}</span>
+                <h3>{item.benefit}</h3>
+                <p>{item.description}</p>
+                <small>Выдаёт: {item.issuer}</small>
+              </article>
+            ))}
+          </div>
+          <p className="promotion__muted">
+            Одновременно нельзя применять несколько рекомендаций. Ходатайство
+            запрашивается на игровом сервере и утверждается в профильном канале
+            Discord (глава VIII устава).
+          </p>
+        </section>
+
+        <section
+          className="promotion__reference"
+          aria-labelledby="promotion-reference-heading"
+        >
+          <div className="promotion__section-heading">
+            <div>
+              <p className="page__eyebrow">03 / Полный маршрут</p>
+              <h2 id="promotion-reference-heading">Все переходы раздела</h2>
+            </div>
+          </div>
+          {track.steps.map((item, index) => (
+            <details className="promotion__step" key={item.from}>
+              <summary>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>
+                  {item.from} → {item.to}
+                </h3>
+                <span className="promotion__step-plus" aria-hidden="true">
+                  +
+                </span>
+              </summary>
+              <ol>
+                {item.tasks.map((task, taskIndex) => (
+                  <li key={taskIndex}>{task}</li>
+                ))}
+              </ol>
+              <button
+                type="button"
+                className="promotion__button"
+                onClick={() => {
+                  setStepIndex(index)
+                  document
+                    .getElementById('promotion-selection')
+                    ?.scrollIntoView({
+                      behavior: window.matchMedia(
+                        '(prefers-reduced-motion: reduce)',
+                      ).matches
+                        ? 'instant'
+                        : 'smooth',
+                    })
+                }}
+              >
+                Рассчитать этот переход
+              </button>
+            </details>
+          ))}
+        </section>
+
+        <div className="promotion__footnote">
+          <strong>Перед подачей отчёта</strong>
           <p>
-            Тренировки — события, где улучшаются физические и дыхательные
-            навыки. Мероприятия — события, связанные с обыденностью. Захват
-            точек и зачистки не считаются тренировкой или мероприятием.
+            При отсутствии Столпа или его официальном отпуске аттестацию
+            запрашивают у Кагаи Убуяшики. Обычно Столп обязан выдать задание в
+            течение 24 часов после официального RP-запроса через ворона.
           </p>
           <p>
-            При подаче рапорта на повышение по скриншотам должно быть понятно,
-            что именно было выполнено. Отчёт о спецзаданиях подаётся отдельно от
-            основного отчёта.
+            В последнем блоке есть задание проверить крышу, а п. 2.3 устава
+            запрещает находиться на крышах. Согласуй такое задание с
+            руководством заранее.
           </p>
-        </article>
+          <Link to="/promotion-info">Открыть полный устав →</Link>
+        </div>
       </div>
     </section>
   )
 }
-
-export default Promotion
