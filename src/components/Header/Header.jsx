@@ -123,7 +123,9 @@ function Header() {
         aria-label="Административная панель"
         title="Административная панель"
       >
-        <img src="/images/admin-button.png" alt="" />
+        <span className="header__admin-art">
+          <img src="/images/admin-button.png" alt="" />
+        </span>
       </NavLink>
     </header>
   )

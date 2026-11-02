@@ -26,42 +26,79 @@
 }
 
 .header__admin {
-  width: 76px;
-  height: 38px;
-  flex: 0 0 76px;
-  overflow: hidden;
-  border-radius: 18px;
+  width: 96px;
+  height: 44px;
+  flex: 0 0 96px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+}
+
+/* Область нажатия неподвижна; плавно парит только сама картинка. */
+.header__admin-art {
   position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 848 / 274;
+  overflow: hidden;
+  border-radius: 999px;
+  animation: adminFloat 5s ease-in-out infinite;
   transition:
-    filter 0.2s,
-    transform 0.2s;
+    filter 0.35s ease,
+    box-shadow 0.35s ease;
 }
+
+/* В исходном PNG большие пустые поля: показываем только саму кнопку,
+   сохраняя пропорции изображения и не меняя пользовательский файл. */
 .header__admin img {
-  width: 94px;
+  width: 226.42%;
   max-width: none;
-  height: 63px;
+  height: auto;
   position: absolute;
-  left: -9px;
-  top: -13px;
+  left: -62.62%;
+  top: -102.19%;
+  pointer-events: none;
+  user-select: none;
 }
-.header__admin:hover {
-  filter: brightness(1.2);
-  transform: translateY(-2px);
+
+.header__admin:hover .header__admin-art,
+.header__admin:focus-visible .header__admin-art,
+.header__admin:active .header__admin-art {
+  animation-play-state: paused;
+  filter: brightness(1.15);
+  box-shadow: 0 0 18px rgba(169, 133, 255, 0.24);
 }
+
 .header__admin:focus-visible {
   outline: 2px solid var(--purple-light);
   outline-offset: 4px;
 }
+
+@keyframes adminFloat {
+  0%,
+  100% {
+    transform: translateY(2px) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__admin-art {
+    animation: none;
+    transition: none;
+  }
+}
+
 @media (max-width: 600px) {
   .header {
     gap: 10px;
   }
   .header__admin {
-    width: 60px;
-    flex-basis: 60px;
-  }
-  .header__admin img {
-    left: -17px;
+    width: 84px;
+    flex-basis: 84px;
   }
 }
 
