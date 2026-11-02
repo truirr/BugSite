@@ -3,8 +3,16 @@
   overflow: hidden;
   padding: 70px 0 30px;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255, 131, 200, 0.16), transparent 34%),
-    radial-gradient(circle at 88% 14%, rgba(169, 133, 255, 0.14), transparent 32%),
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(255, 131, 200, 0.16),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 14%,
+      rgba(169, 133, 255, 0.14),
+      transparent 32%
+    ),
     linear-gradient(180deg, #05040a, #0b0611 52%, #05040a);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -19,7 +27,13 @@
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 44px 44px;
-  mask-image: linear-gradient(180deg, transparent, #000 16%, #000 76%, transparent);
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 16%,
+    #000 76%,
+    transparent
+  );
 }
 
 .footer__glow {
@@ -71,7 +85,11 @@
   flex: 0 0 auto;
   border-radius: 22px;
   background:
-    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.5), transparent 18%),
+    radial-gradient(
+      circle at 35% 28%,
+      rgba(255, 255, 255, 0.5),
+      transparent 18%
+    ),
     linear-gradient(135deg, rgba(255, 131, 200, 0.9), rgba(169, 133, 255, 0.82));
   color: rgba(5, 4, 10, 0.74);
   font-family: serif;
@@ -119,7 +137,11 @@
   padding: 24px 28px;
   border-radius: 28px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.02)),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.02)
+    ),
     rgba(10, 8, 16, 0.46);
   border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
@@ -170,7 +192,11 @@
   padding: 15px 22px;
   border-radius: 999px;
   color: #08050d;
-  background: linear-gradient(135deg, rgba(255, 131, 200, 0.96), rgba(169, 133, 255, 0.92));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 131, 200, 0.96),
+    rgba(169, 133, 255, 0.92)
+  );
   font-family: var(--font-accent);
   font-size: 15px;
   box-shadow:
@@ -188,7 +214,12 @@
   left: -80%;
   width: 55%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.42),
+    transparent
+  );
   transform: skewX(-18deg);
   transition: left 0.55s ease;
 }

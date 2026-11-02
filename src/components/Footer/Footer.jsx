@@ -26,8 +26,8 @@ function Footer() {
 
         <div className="footer__center">
           <p>
-            Фан-сайт отряда Дыхания насекомого, созданный для удобного доступа
-            к информации, составу, лечению, тестам и материалам проекта.
+            Фан-сайт отряда Дыхания насекомого, созданный для удобного доступа к
+            информации, составу, лечению, тестам и материалам проекта.
           </p>
 
           <div className="footer__butterflies" aria-hidden="true">
@@ -57,7 +57,9 @@ function Footer() {
 
       <div className="footer__bottom">
         <span>© 2026 Butterfly Squad</span>
-        <span>Fan project. Not affiliated with official Demon Slayer media.</span>
+        <span>
+          Fan project. Not affiliated with official Demon Slayer media.
+        </span>
       </div>
     </footer>
   )

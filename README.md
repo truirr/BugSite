@@ -1,16 +1,78 @@
-# React + Vite
+# Butterfly Squad — сайт и админка
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React/Vite + Vercel Functions. Админка: `/admin`, кнопка с бабочкой в шапке.
 
-Currently, two official plugins are available:
+## Локальный запуск
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Нужен Node.js 22.12+ (или 24).
 
-## React Compiler
+```sh
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Откройте http://localhost:5173. Vite запускает и страницы, и `/api/*` через локальный адаптер. После изменения `.env` перезапустите сервер. `npm run preview` показывает только статическую сборку — для API используйте `npm run dev` или Vercel.
 
-## Expanding the ESLint configuration
+В `.env` уже добавлены пустые настройки без замены существующих значений. Полный шаблон — `.env.example`. Не используйте префикс `VITE_` для секретов: он делает значения доступными браузеру.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Без Redis публичные страницы показывают исходный состав, галерею и каталог тестов. Вход, сохранение, начало и отправка тестов требуют Redis. Начальные семь тестов и весь состав сохранены в `server/seed.json`; правильные ответы не импортируются в клиентскую сборку. Первая запись из админки сохраняет начальные данные вместе с изменениями в Redis.
+
+## Настройка на Vercel
+
+1. В настройках существующего проекта добавьте переменные из `.env.example` для Production.
+2. `APP_URL` — точный основной адрес сайта, например `https://your-site.vercel.app`, без пути. Заходите в админку через этот домен. Для Preview задайте отдельный APP_URL, callback и базу/префикс Redis.
+3. Укажите Discord Client ID и Client Secret из уже созданного приложения.
+4. В Discord Developer Portal → OAuth2 → Redirects добавьте **точно**:
+   `https://your-site.vercel.app/api/auth?action=callback`
+   Для локальной разработки также добавьте `http://localhost:5173/api/auth?action=callback`.
+5. Впишите `DISCORD_ADMIN_USER_IDS` (один или несколько ID через запятую), `DISCORD_GUILD_ID` и два ID ролей в `DISCORD_ADMIN_ROLE_ID_1` / `DISCORD_ADMIN_ROLE_ID_2`. В Discord включите режим разработчика, чтобы копировать ID.
+6. Укажите существующий `DISCORD_TEST_WEBHOOK_URL`.
+7. В Cloudinary Console скопируйте Cloud Name, API Key и API Secret. Unsigned preset не нужен: сервер подписывает загрузки, браузер отправляет файл непосредственно в Cloudinary.
+8. Создайте постоянную базу Upstash Redis, скопируйте REST URL и **read/write** REST Token. В Production используйте `REDIS_KEY_PREFIX=butterfly-production`. Не используйте один префикс для разработки и рабочего сайта.
+9. Выполните деплой обновлённого репозитория. Vercel использует `npm run build`, каталог `dist` и функции в `api/`. Требуется Node.js runtime; только статический хостинг не поддерживает админку.
+
+Доступ разрешён, если ID пользователя в списке **ИЛИ** пользователь состоит на указанном сервере с хотя бы одной из двух ролей. ID из списка не требует членства на сервере. Без совпадений доступ закрыт. Используются OAuth scopes `identify guilds.members.read`; бот и bot token не нужны. Роли проверяются при каждом закрытом запросе. Сессия хранится в Redis до 8 часов, браузер получает только случайный HttpOnly/SameSite cookie. Выход удаляет сессию.
+
+## Работа с админкой
+
+- **Тесты:** создать/выбрать тест, заполнить название, описание, вопросы, варианты и один правильный ответ; выбрать количество случайных вопросов; сохранить. Можно менять и удалять существующие тесты. В одной попытке до 100 вопросов. Комбинированный тест формируется автоматически.
+- **Состав:** изменить имя, загрузить фото или вставить HTTPS-ссылку Cloudinary/Discord; добавить участника, свободный слот или группу. Если старый Discord-аватар недоступен, сайт показывает букву вместо сломанной картинки.
+- **Галерея:** загрузить фото, добавить подпись, сохранить. Новые изображения хранятся в Cloudinary, ссылки — в Redis. Семь исходных локальных фотографий сохраняются на сайте; их можно повторно загрузить из `src/assets/img`, если нужно перенести копии в Cloudinary. Удаление фото в админке убирает его с сайта, но не удаляет файл из Cloudinary (может использоваться в других местах).
+- Кнопка **Сохранить изменения** публикует изменения сразу, без пересборки. Несохранённые изменения помечены. При параллельном редактировании устаревшая версия отклоняется с ошибкой 409; сохраните нужный текст отдельно, обновите страницу и повторите правки.
+
+Сервер сам выбирает вопросы, перемешивает ответы и считает результат. Попытка действует 2 часа. После первой проверки оценка фиксируется. Если Discord недоступен, можно повторить доставку без изменения оценки. Успешная отправка повторно не выполняется; при редком сетевом обрыве после принятия сообщения Discord возможен дубликат — в сообщении есть ID попытки для сверки. Результаты и сессии временные, контент хранится без TTL. Не очищайте базу Redis: в ней живут правки админки.
+
+## Проверки
+
+```sh
+npm test
+npm run build
+```
+
+Автотесты используют изолированные заглушки Discord/Redis и не отправляют реальные сообщения. Проверяют права доступа, защиту от чужого Origin, OAuth state, отсутствие ответов в публичном API, сохранение с контролем версии, подпись Cloudinary, серверный подсчёт и повторную доставку результатов.
+
+После заполнения ключей проверьте на своём домене: вход разрешённого пользователя; отказ постороннему; доступ каждой роли; сохранение теста/состава; загрузку фото; прохождение теста и сообщение вебхука. Реальные интеграции без ваших ключей не проверялись.
+
+Документация интеграций: [Discord OAuth2](https://docs.discord.com/developers/topics/oauth2), [Cloudinary signatures](https://cloudinary.com/documentation/authentication_signatures), [Upstash REST API](https://upstash.com/docs/redis/features/restapi).
+
+## Читаемость и форматирование кода
+
+Для единых отступов и переносов используется Prettier: 2 пробела, ширина строки 80 символов, одинарные кавычки в JavaScript. Настройки находятся в `.prettierrc.json`.
+
+```sh
+npm run format        # Привести код к единому виду после правок
+npm run format:check  # Проверить форматирование без изменения файлов
+```
+
+Где искать нужную логику:
+
+- `src/pages/Admin/Admin.jsx` — поля админки, редакторы тестов, состава и галереи.
+- `src/pages/Admin/Admin.css` — оформление админки.
+- `src/pages/Composition/` — карточки участников и оформление состава.
+- `src/pages/Tests/Tests.jsx` — прохождение теста и показ результата.
+- `api/test-result.js` — подсчёт результата, сообщение Discord и ID роли для пинга.
+- `api/auth.js` — вход и выход через Discord.
+- `api/content.js` — чтение и сохранение данных сайта.
+- `api/upload.js` — подпись загрузки в Cloudinary.
+- `server/core.js` — Redis, сессии, права доступа и общие проверки запросов.
+- `server/validation.js` — правила проверки данных и подсчёт оценки.

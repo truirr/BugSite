@@ -2,8 +2,16 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 14% 18%, rgba(255, 131, 200, 0.16), transparent 34%),
-    radial-gradient(circle at 84% 20%, rgba(169, 133, 255, 0.16), transparent 34%),
+    radial-gradient(
+      circle at 14% 18%,
+      rgba(255, 131, 200, 0.16),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 84% 20%,
+      rgba(169, 133, 255, 0.16),
+      transparent 34%
+    ),
     linear-gradient(180deg, #08050d, #120817 52%, #05040a);
 }
 
@@ -17,7 +25,13 @@
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 46px 46px;
-  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 84%, transparent);
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 18%,
+    #000 84%,
+    transparent
+  );
 }
 
 .medical-info__orb {
@@ -100,7 +114,11 @@
 .medical-info__tab--active {
   color: var(--white);
   background:
-    linear-gradient(135deg, rgba(255, 131, 200, 0.34), rgba(169, 133, 255, 0.24)),
+    linear-gradient(
+      135deg,
+      rgba(255, 131, 200, 0.34),
+      rgba(169, 133, 255, 0.24)
+    ),
     rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.18);
 }
@@ -122,7 +140,11 @@
   opacity: 0;
   background:
     linear-gradient(135deg, rgba(255, 131, 200, 0.16), transparent 42%),
-    radial-gradient(circle at 88% 12%, rgba(169, 133, 255, 0.14), transparent 34%);
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(169, 133, 255, 0.14),
+      transparent 34%
+    );
   transition: opacity 0.28s ease;
 }
 
@@ -153,8 +175,16 @@
   flex: 0 0 auto;
   border-radius: 22px;
   background:
-    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.42), transparent 18%),
-    linear-gradient(135deg, rgba(255, 131, 200, 0.42), rgba(169, 133, 255, 0.32));
+    radial-gradient(
+      circle at 35% 28%,
+      rgba(255, 255, 255, 0.42),
+      transparent 18%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 131, 200, 0.42),
+      rgba(169, 133, 255, 0.32)
+    );
   color: var(--white);
   font-family: serif;
   font-size: 34px;
@@ -238,7 +268,11 @@
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.015)
+    ),
     rgba(10, 8, 16, 0.48);
   opacity: 0;
   animation: medicalInfoCardReveal 0.55s ease calc(0.1s + var(--delay)) both;
@@ -252,7 +286,11 @@
   transform: translateY(-4px);
   border-color: rgba(255, 131, 200, 0.2);
   background:
-    linear-gradient(135deg, rgba(255, 131, 200, 0.08), rgba(169, 133, 255, 0.04)),
+    linear-gradient(
+      135deg,
+      rgba(255, 131, 200, 0.08),
+      rgba(169, 133, 255, 0.04)
+    ),
     rgba(10, 8, 16, 0.58);
 }
 

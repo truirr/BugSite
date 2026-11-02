@@ -25,7 +25,11 @@ function Information() {
 
         <div className="information__grid">
           {commands.map(([command, description], index) => (
-            <article className="information__command card" key={command} style={{ '--delay': `${index * 0.04}s` }}>
+            <article
+              className="information__command card"
+              key={command}
+              style={{ '--delay': `${index * 0.04}s` }}
+            >
               <code>{command}</code>
               <p>{description}</p>
             </article>
@@ -34,7 +38,9 @@ function Information() {
 
         <article className="information__bind card">
           <h2>Меню анимаций</h2>
-          <p>Для меню анимаций вроде «Палец вверх», «Следуй за мной» и других:</p>
+          <p>
+            Для меню анимаций вроде «Палец вверх», «Следуй за мной» и других:
+          </p>
           <code>bind кнопка "_DarkRp_AnimationMenu"</code>
         </article>
 

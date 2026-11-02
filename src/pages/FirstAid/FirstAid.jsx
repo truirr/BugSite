@@ -36,7 +36,10 @@ const injuries = [
       {
         title: 'Ссадины',
         people: '1 человек',
-        signs: ['Неглубокое повреждение верхних слоёв кожи.', 'Небольшое или отсутствующее кровотечение.'],
+        signs: [
+          'Неглубокое повреждение верхних слоёв кожи.',
+          'Небольшое или отсутствующее кровотечение.',
+        ],
         treatment: [
           'Промыть рану тёплой водой с дезинфицирующим средством.',
           'Протереть рану марлевой салфеткой.',
@@ -70,7 +73,12 @@ const injuries = [
       {
         title: 'Растяжение связок',
         people: '1 человек',
-        signs: ['Острая боль.', 'Отёк места травмы.', 'Кровоподтёки.', 'Ограничение опоры и движений.'],
+        signs: [
+          'Острая боль.',
+          'Отёк места травмы.',
+          'Кровоподтёки.',
+          'Ограничение опоры и движений.',
+        ],
         treatment: [
           'Приложить лёд, завёрнутый в полотенце.',
           'Держать травмированную конечность на возвышенности.',
@@ -181,7 +189,8 @@ function FirstAid() {
         <h1 className="page__title">ПМП и медицинская помощь</h1>
 
         <p className="firstaid__warning">
-          Информация оформлена как RP-материал для сервера и не является реальной медицинской инструкцией.
+          Информация оформлена как RP-материал для сервера и не является
+          реальной медицинской инструкцией.
         </p>
 
         <div className="firstaid__tabs">
@@ -189,7 +198,11 @@ function FirstAid() {
             <button
               type="button"
               key={group.level}
-              className={active === group.level ? 'firstaid__tab firstaid__tab--active' : 'firstaid__tab'}
+              className={
+                active === group.level
+                  ? 'firstaid__tab firstaid__tab--active'
+                  : 'firstaid__tab'
+              }
               onClick={() => setActive(group.level)}
             >
               {group.level}
@@ -200,7 +213,11 @@ function FirstAid() {
         <div className="firstaid__layout">
           <div className="firstaid__cards">
             {current.items.map((item, index) => (
-              <article className="firstaid__card card" key={item.title} style={{ '--delay': `${index * 0.08}s` }}>
+              <article
+                className="firstaid__card card"
+                key={item.title}
+                style={{ '--delay': `${index * 0.08}s` }}
+              >
                 <div className="firstaid__card-head">
                   <h2>{item.title}</h2>
                   <span>{item.people}</span>
@@ -210,14 +227,18 @@ function FirstAid() {
                   <>
                     <h3>Признаки</h3>
                     <ul>
-                      {item.signs.map((sign) => <li key={sign}>{sign}</li>)}
+                      {item.signs.map((sign) => (
+                        <li key={sign}>{sign}</li>
+                      ))}
                     </ul>
                   </>
                 )}
 
                 <h3>Лечение `/me`</h3>
                 <ol>
-                  {item.treatment.map((step) => <li key={step}>{step}</li>)}
+                  {item.treatment.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
                 </ol>
               </article>
             ))}
@@ -226,7 +247,9 @@ function FirstAid() {
           <aside className="firstaid__kit card">
             <h2>Состав набора ПМП</h2>
             <ul>
-              {kit.map((item) => <li key={item}>{item}</li>)}
+              {kit.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </aside>
         </div>

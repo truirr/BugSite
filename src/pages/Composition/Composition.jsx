@@ -1,196 +1,100 @@
+import { useState } from 'react'
+import useContent from '../../lib/useContent'
+import initialGroups from '../../lib/initial-groups.json'
 import './Composition.css'
 
-const groups = [
-  {
-    rank: 'Столп',
-    icon: '柱',
-    members: [
-      {
-        name: '[🦝] Шинобу Кочо | Андрей',
-        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/662723448082137098/avatars/ba6fa3f8f5a484c3d56decdc94a64db1.png?size=1024',
-      },
-    ],
-  },
-  {
-    rank: 'Цугуко',
-    icon: '継',
-    members: [
-      {
-        name: 'Лейл Мэй',
-        avatar: 'https://cdn.discordapp.com/avatars/543714854402261012/6d4c52825da52aef0063b6b07c852e12.png?size=1024',
-      },
-      {
-        name: 'Ая Наосохима',
-        avatar: 'https://cdn.discordapp.com/avatars/814508220675653642/51974c5055c9a50a145942b5d385efaa.png?size=1024',
-      },
-    ],
-  },
-  {
-    rank: 'Канао Цуюри',
-    icon: '花',
-    members: [
-      {
-        name: 'Канао Рёмен || Аманэ',
-        avatar: 'https://cdn.discordapp.com/avatars/1396831997158096977/6b2475ea94a6867e047d9f6d81c4b0c2.png?size=1024',
-      },
-    ],
-  },
-  {
-    rank: 'Инструктор',
-    icon: '教',
-    members: [
-      {
-        name: 'Hiroshi Akarui',
-        avatar: 'https://cdn.discordapp.com/avatars/557522859849940992/24edf4a1bbe7acadbbf497ceaf7f8378.png?size=1024',
-      },
-      {
-        name: 'Свободный слот',
-        avatar: '',
-      },
-      {
-        name: 'Свободный слот',
-        avatar: '',
-      },
-    ],
-  },
-  {
-    rank: 'Истребитель',
-    icon: '滅',
-    members: [
-      {
-        name: 'Асуми Хидака',
-        avatar: 'https://cdn.discordapp.com/avatars/1511724724823265371/11505169fa5dad2a2213f0a6de550d9c.png?size=1024',
-      },
-      {
-        name: 'Isin Tokasaki',
-        avatar: 'https://cdn.discordapp.com/avatars/887747399001452575/a_afc5896a460dc97248102a0ae466a8bf.gif?size=1024',
-      },
-      {
-        name: 'Ая Они',
-        avatar: 'https://cdn.discordapp.com/avatars/1246322198289842236/ac3e9ff327581070c6477feed29561c9.png?size=1024',
-      },
-      {
-        name: 'Оки Мирай',
-        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/444880330545954819/avatars/03e3908288ebebf04dc21dbe08a521c2.png?size=1024',
-      },
-      {
-        name: 'Kaito Fujimoto',
-        avatar: 'https://cdn.discordapp.com/avatars/1436828265284112577/f1b2d50e202ecd1fdc5a796c4c721e0e.png?size=1024',
-      },
-      {
-        name: 'Свободный слот',
-        avatar: '',
-      },
-      {
-        name: 'Kyouya Shirakawa',
-        avatar: 'https://cdn.discordapp.com/avatars/575358187503484958/1b2341ff06e06fd03d9b5325fe1c4e2e.png?size=1024',
-      },
-      {
-        name: 'Хёга Рю',
-        avatar: 'https://cdn.discordapp.com/avatars/1070619979575214130/1d9f6865b16b8077cb40df4eae53ed8b.png?size=1024',
-      },
-      {
-        name: 'Свободный слот',
-        avatar: '',
-      },
-      {
-        name: 'Theotto Rikko',
-        avatar: 'https://cdn.discordapp.com/avatars/282527382580232192/199060b142ee0dd746818b50b0c9875c.png?size=1024',
-      },
-    ],
-  },
-  {
-    rank: 'Ученик',
-    icon: '学',
-    members: [
-      {
-        name: 'Hikaru Kusakabe',
-        avatar: 'https://cdn.discordapp.com/avatars/351978445707673601/ab0bda477f6623196351bfb84126d4dc.png?size=1024',
-      },
-      {
-        name: 'Свободный слот',
-        avatar: '',
-      },
-      {
-        name: 'Свободный слот',
-        avatar: '',
-      },
-    ],
-  },
-  {
-    rank: 'Чистильщик',
-    icon: '清',
-    members: [
-      {
-        name: 'Кэтсэро Накамура',
-        avatar: 'https://cdn.discordapp.com/avatars/915168550547759126/a_6f860b2cb7616109806087a11c85fa4a.gif?size=1024',
-      },
-      {
-        name: 'Тиша Ито',
-        avatar: 'https://cdn.discordapp.com/avatars/414828581626052608/b489d4305e9afb57ee440a1e11c55ce6.png?size=1024',
-      },
-    ],
-  },
-  {
-    rank: 'Донат слот',
-    icon: '蝶',
-    members: [
-      {
-        name: 'Ritsuka Uenoyama',
-        avatar: 'https://cdn.discordapp.com/guilds/986216078017462292/users/922568676908077116/avatars/a_cd4e85d76000718f2bcb42e3589bd2b7.gif?size=1024',
-      },
-    ],
-  },
-]
-
-function Composition() {
+function Portrait({ member }) {
+  const [failed, setFailed] = useState(false)
+  return (
+    <div className="composition__portrait">
+      {member.avatar && !failed ? (
+        <img
+          src={member.avatar}
+          alt={member.name}
+          loading="lazy"
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <span aria-hidden="true">{member.name.slice(0, 1).toUpperCase()}</span>
+      )}
+    </div>
+  )
+}
+export default function Composition() {
+  const { content, error } = useContent()
+  const groups = content?.groups || initialGroups
+  const occupied = groups
+    .flatMap((g) => g.members)
+    .filter((m) => m.name !== 'Свободный слот').length
   return (
     <section className="composition page">
       <div className="page__container">
-        <p className="page__eyebrow">Butterfly Squad</p>
-        <h1 className="page__title">Состав дыхания насекомого</h1>
-
-        <div className="composition__grid">
-          {groups.map((group, index) => (
-            <article
-              className="composition__card card"
-              key={group.rank}
-              style={{ '--delay': `${index * 0.07}s` }}
-            >
-              <div className="composition__kanji">{group.icon}</div>
-
-              <h2>{group.rank}</h2>
-
-              <ul>
-                {group.members.map((member, memberIndex) => (
-                  <li
-                    className={
-                      member.name === 'Свободный слот' ? 'composition__empty' : ''
-                    }
-                    key={`${group.rank}-${member.name}-${memberIndex}`}
-                  >
-                    <span className="composition__member">
-                      {member.avatar && (
-                        <img
-                          className="composition__avatar"
-                          src={member.avatar}
-                          alt={member.name}
-                        />
-                      )}
-
-                      <span className="composition__member-name">
-                        {member.name}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
+        <div className="composition__intro">
+          <div>
+            <p className="page__eyebrow">Butterfly Squad / 人々</p>
+            <h1>
+              Люди
+              <br />
+              <span>поместья Бабочки</span>
+            </h1>
+            <p className="composition__lead">
+              Разные истории. Одно дыхание. Те, кто делает наше поместье домом.
+            </p>
+          </div>
+          <div className="composition__seal" aria-hidden="true">
+            蝶<span>ДЫХАНИЕ НАСЕКОМОГО</span>
+          </div>
         </div>
+        <div className="composition__summary">
+          <span>
+            <strong>{String(occupied).padStart(2, '0')}</strong> участников
+          </span>
+          <span>
+            <strong>{String(groups.length).padStart(2, '0')}</strong> рангов
+          </span>
+          <span className="composition__summary-note">Одна команда</span>
+        </div>
+        {error && (
+          <p role="status">
+            Не удалось обновить состав. Показана исходная версия.
+          </p>
+        )}
+        {groups.map((group, gi) => (
+          <section className="composition__group" key={`${group.rank}-${gi}`}>
+            <div className="composition__group-heading">
+              <span className="composition__kanji">{group.icon}</span>
+              <h2>{group.rank}</h2>
+              <span className="composition__line" />
+              <small>{String(gi + 1).padStart(2, '0')}</small>
+            </div>
+            <div className="composition__members">
+              {group.members.map((member, mi) =>
+                member.name === 'Свободный слот' ? (
+                  <article className="composition__vacancy" key={mi}>
+                    <span>＋</span>
+                    <h3>Место для новой истории</h3>
+                    <p>Свободный слот · {group.rank}</p>
+                  </article>
+                ) : (
+                  <article
+                    className={`composition__person ${gi === 0 ? 'composition__person--leader' : ''}`}
+                    key={`${mi}-${member.avatar}`}
+                  >
+                    <Portrait member={member} />
+                    <div className="composition__identity">
+                      <p>{group.rank}</p>
+                      <h3>{member.name}</h3>
+                      <span>
+                        Butterfly Squad <b>✦</b>
+                      </span>
+                    </div>
+                  </article>
+                ),
+              )}
+            </div>
+          </section>
+        ))}
       </div>
     </section>
   )
 }
-
-export default Composition

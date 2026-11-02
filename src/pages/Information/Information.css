@@ -1,7 +1,15 @@
 .information {
   background:
-    radial-gradient(circle at 80% 20%, rgba(157, 255, 220, 0.13), transparent 34%),
-    radial-gradient(circle at 18% 26%, rgba(255, 131, 200, 0.16), transparent 34%),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(157, 255, 220, 0.13),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 18% 26%,
+      rgba(255, 131, 200, 0.16),
+      transparent 34%
+    ),
     linear-gradient(180deg, #08050d, #05040a);
 }
 
@@ -53,7 +61,11 @@
   display: inline-flex;
   padding: 16px 22px;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(255, 131, 200, 0.9), rgba(169, 133, 255, 0.86));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 131, 200, 0.9),
+    rgba(169, 133, 255, 0.86)
+  );
   color: #08050d;
   font-family: var(--font-accent);
   transition: 0.25s ease;

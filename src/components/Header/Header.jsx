@@ -39,7 +39,12 @@ function Header() {
 
   return (
     <header className={`header ${isOpen ? 'header--menu-open' : ''}`}>
-      <NavLink to="/" className="header__logo" onClick={closeMenu} aria-label="На главную">
+      <NavLink
+        to="/"
+        className="header__logo"
+        onClick={closeMenu}
+        aria-label="На главную"
+      >
         <span className="header__butterfly"></span>
         <span>Дыхание насекомого</span>
       </NavLink>
@@ -58,7 +63,9 @@ function Header() {
       <nav className={`header__nav ${isOpen ? 'header__nav--open' : ''}`}>
         {links.map((link) => {
           if (link.children) {
-            const isDropdownActive = link.activePaths?.includes(location.pathname)
+            const isDropdownActive = link.activePaths?.includes(
+              location.pathname,
+            )
 
             return (
               <div className="header__dropdown" key={link.label}>
@@ -109,6 +116,15 @@ function Header() {
           )
         })}
       </nav>
+      <NavLink
+        to="/admin"
+        className="header__admin"
+        onClick={closeMenu}
+        aria-label="Административная панель"
+        title="Административная панель"
+      >
+        <img src="/images/admin-button.png" alt="" />
+      </NavLink>
     </header>
   )
 }

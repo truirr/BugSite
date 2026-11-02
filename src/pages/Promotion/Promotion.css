@@ -1,6 +1,10 @@
 .promotion {
   background:
-    radial-gradient(circle at 50% 0%, rgba(255, 131, 200, 0.18), transparent 36%),
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 131, 200, 0.18),
+      transparent 36%
+    ),
     linear-gradient(180deg, #08050d, #120816 50%, #05040a);
 }
 

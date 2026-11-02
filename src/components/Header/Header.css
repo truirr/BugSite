@@ -25,6 +25,46 @@
   animation: headerDown 0.8s ease both;
 }
 
+.header__admin {
+  width: 76px;
+  height: 38px;
+  flex: 0 0 76px;
+  overflow: hidden;
+  border-radius: 18px;
+  position: relative;
+  transition:
+    filter 0.2s,
+    transform 0.2s;
+}
+.header__admin img {
+  width: 94px;
+  max-width: none;
+  height: 63px;
+  position: absolute;
+  left: -9px;
+  top: -13px;
+}
+.header__admin:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+.header__admin:focus-visible {
+  outline: 2px solid var(--purple-light);
+  outline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .header {
+    gap: 10px;
+  }
+  .header__admin {
+    width: 60px;
+    flex-basis: 60px;
+  }
+  .header__admin img {
+    left: -17px;
+  }
+}
+
 .header__logo {
   display: inline-flex;
   align-items: center;
@@ -46,8 +86,16 @@
 
   border-radius: 16px;
   background:
-    radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.9), transparent 13%),
-    linear-gradient(135deg, rgba(255, 131, 200, 0.96), rgba(169, 133, 255, 0.92));
+    radial-gradient(
+      circle at 35% 35%,
+      rgba(255, 255, 255, 0.9),
+      transparent 13%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 131, 200, 0.96),
+      rgba(169, 133, 255, 0.92)
+    );
 
   box-shadow:
     0 0 24px rgba(255, 131, 200, 0.35),

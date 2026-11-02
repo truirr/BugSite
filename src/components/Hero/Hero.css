@@ -23,8 +23,18 @@
   z-index: 2;
 
   background:
-    radial-gradient(circle at 76% 58%, transparent 0 24%, rgba(5, 4, 10, 0.12) 48%, rgba(5, 4, 10, 0.5) 100%),
-    linear-gradient(90deg, rgba(5, 4, 10, 0.68), rgba(5, 4, 10, 0.16) 45%, rgba(5, 4, 10, 0.18));
+    radial-gradient(
+      circle at 76% 58%,
+      transparent 0 24%,
+      rgba(5, 4, 10, 0.12) 48%,
+      rgba(5, 4, 10, 0.5) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(5, 4, 10, 0.68),
+      rgba(5, 4, 10, 0.16) 45%,
+      rgba(5, 4, 10, 0.18)
+    );
 }
 
 .hero__petals {
@@ -38,7 +48,9 @@
     radial-gradient(circle, rgba(255, 160, 214, 0.9) 0 2px, transparent 3px),
     radial-gradient(circle, rgba(255, 230, 250, 0.65) 0 1.5px, transparent 3px);
 
-  background-size: 220px 160px, 310px 210px;
+  background-size:
+    220px 160px,
+    310px 210px;
 
   opacity: 0.48;
   animation: petalsMove 24s linear infinite;
@@ -149,8 +161,7 @@
 
   width: clamp(360px, 42vw, 760px);
 
-  filter:
-    drop-shadow(0 30px 38px rgba(0, 0, 0, 0.6))
+  filter: drop-shadow(0 30px 38px rgba(0, 0, 0, 0.6))
     drop-shadow(0 0 26px rgba(255, 131, 200, 0.28));
 
   opacity: 0;

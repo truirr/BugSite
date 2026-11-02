@@ -1,227 +1,114 @@
-const DISCORD_TEST_WEBHOOK_URL = process.env.DISCORD_TEST_WEBHOOK_URL
+import {
+  endpoint,
+  sameOrigin,
+  body,
+  redis,
+  key,
+  hash,
+  token,
+  env,
+  fail,
+  rateLimit,
+} from '../server/core.js'
+import { grade } from '../server/validation.js'
 
-const rateLimitStore = new Map()
+export default endpoint(async (req, res) => {
+  // Проверяем запрос и находим сохранённую попытку теста.
+  if (req.method !== 'POST') fail(405, 'Метод не разрешён.')
+  sameOrigin(req)
+  const { attemptId, answers } = body(req)
+  if (typeof attemptId !== 'string' || !/^[a-f0-9]{64}$/.test(attemptId))
+    fail(400, 'Некорректная попытка.')
+  await rateLimit(req, 'result', 60, 30)
+  const attemptKey = key(`attempt:${hash(attemptId)}`)
+  const raw = await redis('GET', attemptKey)
+  if (!raw) fail(410, 'Попытка истекла. Начните тест заново.')
+  let attempt = JSON.parse(raw)
+  if (attempt.sent)
+    return res.status(200).json({ ...attempt.result, sent: true })
 
-const RATE_LIMIT_TIME = 2 * 60 * 1000
-
-function getClientIp(req) {
-  const forwardedFor = req.headers['x-forwarded-for']
-
-  if (typeof forwardedFor === 'string') {
-    return forwardedFor.split(',')[0].trim()
-  }
-
-  return req.socket?.remoteAddress || 'unknown'
-}
-
-function checkRateLimit(ip) {
-  const now = Date.now()
-  const lastRequestTime = rateLimitStore.get(ip)
-
-  if (lastRequestTime && now - lastRequestTime < RATE_LIMIT_TIME) {
-    const retryAfter = Math.ceil((RATE_LIMIT_TIME - (now - lastRequestTime)) / 1000)
-
-    return {
-      allowed: false,
-      retryAfter,
-    }
-  }
-
-  rateLimitStore.set(ip, now)
-
-  return {
-    allowed: true,
-    retryAfter: 0,
-  }
-}
-
-function cleanText(value, maxLength = 500) {
-  if (typeof value !== 'string') return ''
-
-  return value
-    .trim()
-    .replaceAll('@everyone', '@\u200beveryone')
-    .replaceAll('@here', '@\u200bhere')
-    .slice(0, maxLength)
-}
-
-function getResultColor(percent) {
-  if (percent >= 90) return 0x4ade80
-  if (percent >= 50) return 0xfacc15
-  return 0xfb7185
-}
-
-function getResultStatus(percent) {
-  if (percent >= 90) return 'Отличный результат'
-  if (percent >= 50) return 'Средний результат'
-  return 'Нужно повторить материал'
-}
-
-function validateResult(body) {
-  const fullName = cleanText(body.fullName, 80)
-  const position = cleanText(body.position, 80)
-  const testTitle = cleanText(body.testTitle, 120)
-  const testId = cleanText(body.testId, 80)
-
-  const total = Number(body.total)
-  const correct = Number(body.correct)
-  const percent = Number(body.percent)
-
-  if (!fullName) {
-    return { ok: false, message: 'Не указано имя и фамилия.' }
-  }
-
-  if (!position) {
-    return { ok: false, message: 'Не указана должность.' }
-  }
-
-  if (!testTitle) {
-    return { ok: false, message: 'Не указано название теста.' }
-  }
-
-  if (!Number.isFinite(total) || total <= 0 || total > 100) {
-    return { ok: false, message: 'Некорректное количество вопросов.' }
-  }
-
-  if (!Number.isFinite(correct) || correct < 0 || correct > total) {
-    return { ok: false, message: 'Некорректное количество правильных ответов.' }
-  }
-
-  if (!Number.isFinite(percent) || percent < 0 || percent > 100) {
-    return { ok: false, message: 'Некорректный процент результата.' }
-  }
-
-  return {
-    ok: true,
-    data: {
-      fullName,
-      position,
-      testTitle,
-      testId,
-      total,
-      correct,
-      percent,
-      date: cleanText(body.date, 80) || new Date().toLocaleString('ru-RU'),
-    },
-  }
-}
-
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({
-      success: false,
-      message: 'Метод не разрешён.',
-    })
-  }
-
+  // Блокировка защищает от двух одновременных отправок одной попытки.
+  const lockKey = `${attemptKey}:lock`
+  const lock = token()
+  if (!(await redis('SET', lockKey, lock, 'NX', 'EX', 60)))
+    fail(409, 'Результат уже отправляется. Подождите несколько секунд.')
   try {
-    if (!DISCORD_TEST_WEBHOOK_URL) {
-      return res.status(500).json({
-        success: false,
-        message: 'DISCORD_TEST_WEBHOOK_URL не указан в переменных Vercel.',
-      })
+    const fresh = await redis('GET', attemptKey)
+    if (!fresh) fail(410, 'Попытка истекла. Начните тест заново.')
+    attempt = JSON.parse(fresh)
+    if (attempt.sent)
+      return res.status(200).json({ ...attempt.result, sent: true })
+
+    // Оценка фиксируется один раз. Повторная отправка её не изменяет.
+    if (!attempt.result) {
+      attempt.result = {
+        ...grade(attempt, answers),
+        fullName: attempt.fullName,
+        position: attempt.position,
+        testTitle: attempt.testTitle,
+        date: new Date().toISOString(),
+      }
+      await redis('SET', attemptKey, JSON.stringify(attempt), 'EX', 7200)
     }
+    const result = attempt.result
+    let sent = false
 
-    const ip = getClientIp(req)
-    const rateLimit = checkRateLimit(ip)
-
-    if (!rateLimit.allowed) {
-      return res.status(429).json({
-        success: false,
-        message: `Слишком много отправок. Попробуйте снова через ${rateLimit.retryAfter} сек.`,
-      })
-    }
-
-    const validation = validateResult(req.body)
-
-    if (!validation.ok) {
-      return res.status(400).json({
-        success: false,
-        message: validation.message,
-      })
-    }
-
-    const result = validation.data
-    const status = getResultStatus(result.percent)
-
-    const discordPayload = {
-      username: 'Butterfly Estate Tests',
-      avatar_url:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-xKgiBnJXWeGlZUDNf2Ul-XkL-EB3miexuunQ4XlJanIj5w5PKp4mR0nR&s=10',
-      embeds: [
-        {
-          title: 'Новый результат тестирования',
-          description: `**${status}**`,
-          color: getResultColor(result.percent),
-          fields: [
+    // Сообщение Discord: пинг нужной роли и карточка с результатом.
+    try {
+      const response = await fetch(env('DISCORD_TEST_WEBHOOK_URL'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(10000),
+        body: JSON.stringify({
+          content: '<@&1331027554378846329>',
+          allowed_mentions: { parse: [], roles: ['1331027554378846329'] },
+          embeds: [
             {
-              name: 'Участник',
-              value: result.fullName,
-              inline: true,
-            },
-            {
-              name: 'Должность',
-              value: result.position,
-              inline: true,
-            },
-            {
-              name: 'Тест',
-              value: result.testTitle,
-              inline: false,
-            },
-            {
-              name: 'Результат',
-              value: `${result.correct}/${result.total}`,
-              inline: true,
-            },
-            {
-              name: 'Процент',
-              value: `${result.percent}%`,
-              inline: true,
-            },
-            {
-              name: 'Дата',
-              value: result.date,
-              inline: false,
+              title: 'Новый результат тестирования',
+              color: 0xa985ff,
+              fields: [
+                { name: 'Участник', value: result.fullName },
+                { name: 'Должность', value: result.position },
+                { name: 'Тест', value: result.testTitle },
+                {
+                  name: 'Результат',
+                  value: `${result.correct}/${result.total} · ${result.percent}%`,
+                },
+              ],
+              footer: { text: `Попытка ${hash(attemptId).slice(0, 12)}` },
+              timestamp: result.date,
             },
           ],
-          footer: {
-            text: 'Дыхание насекомого — система тестирования',
-          },
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    }
-
-    const discordResponse = await fetch(DISCORD_TEST_WEBHOOK_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(discordPayload),
-    })
-
-    if (!discordResponse.ok) {
-      const errorText = await discordResponse.text()
-
-      console.error('Discord webhook error:', errorText)
-
-      return res.status(502).json({
-        success: false,
-        message: 'Discord не принял результат теста.',
+        }),
       })
+      sent = response.ok
+    } catch {
+      // Сохраняем оценку, чтобы пользователь мог повторить отправку.
     }
-
-    return res.status(200).json({
-      success: true,
-      message: 'Результат теста отправлен в Discord.',
+    if (sent) {
+      attempt.sent = true
+      await redis('SET', attemptKey, JSON.stringify(attempt), 'EX', 7200)
+    }
+    res.status(200).json({
+      ...result,
+      sent,
+      message: sent
+        ? 'Результат отправлен в Discord.'
+        : 'Оценка сохранена, но Discord недоступен или вебхук не настроен. Повторите отправку.',
     })
-  } catch (error) {
-    console.error('Test result error:', error)
+  } finally {
+    await redis(
+      'EVAL',
+      `
+        if redis.call('GET', KEYS[1]) == ARGV[1] then
+          return redis.call('DEL', KEYS[1])
+        end
 
-    return res.status(500).json({
-      success: false,
-      message: 'Ошибка сервера при отправке результата.',
-    })
+        return 0
+      `,
+      1,
+      lockKey,
+      lock,
+    )
   }
-}
+})

@@ -17,6 +17,7 @@ import PromotionInfo from './pages/PromotionInfo/PromotionInfo'
 import Anatomy from './pages/Anatomy/Anatomy'
 import MedicalInformation from './pages/MedicalInformation/MedicalInformation'
 import Tests from './pages/Tests/Tests'
+import Admin from './pages/Admin/Admin'
 
 import './App.css'
 
@@ -63,6 +64,7 @@ function App() {
           <Route path="/information" element={<Information />} />
           <Route path="/promotion-info" element={<PromotionInfo />} />
           <Route path="/tests" element={<Tests />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
 

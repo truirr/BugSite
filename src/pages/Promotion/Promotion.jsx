@@ -121,7 +121,11 @@ function Promotion() {
 
         <div className="promotion__ranks">
           {ranks.map((rank, index) => (
-            <div className="promotion__rank" key={rank.name} style={{ '--delay': `${index * 0.06}s` }}>
+            <div
+              className="promotion__rank"
+              key={rank.name}
+              style={{ '--delay': `${index * 0.06}s` }}
+            >
               <span>{rank.kanji}</span>
               <p>{rank.name}</p>
             </div>
@@ -130,7 +134,11 @@ function Promotion() {
 
         <div className="promotion__timeline">
           {promotionSteps.map((step, index) => (
-            <article className="promotion__step card" key={step.from} style={{ '--delay': `${index * 0.07}s` }}>
+            <article
+              className="promotion__step card"
+              key={step.from}
+              style={{ '--delay': `${index * 0.07}s` }}
+            >
               <div className="promotion__step-head">
                 <h2>{step.from}</h2>
                 <span>→</span>
@@ -138,7 +146,9 @@ function Promotion() {
               </div>
 
               <ul>
-                {step.tasks.map((task) => <li key={task}>{task}</li>)}
+                {step.tasks.map((task) => (
+                  <li key={task}>{task}</li>
+                ))}
               </ul>
             </article>
           ))}
@@ -147,14 +157,14 @@ function Promotion() {
         <article className="promotion__info card">
           <h2>Дополнительная информация</h2>
           <p>
-            Тренировки — события, где улучшаются физические и дыхательные навыки.
-            Мероприятия — события, связанные с обыденностью. Захват точек и
-            зачистки не считаются тренировкой или мероприятием.
+            Тренировки — события, где улучшаются физические и дыхательные
+            навыки. Мероприятия — события, связанные с обыденностью. Захват
+            точек и зачистки не считаются тренировкой или мероприятием.
           </p>
           <p>
             При подаче рапорта на повышение по скриншотам должно быть понятно,
-            что именно было выполнено. Отчёт о спецзаданиях подаётся отдельно
-            от основного отчёта.
+            что именно было выполнено. Отчёт о спецзаданиях подаётся отдельно от
+            основного отчёта.
           </p>
         </article>
       </div>

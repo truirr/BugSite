@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import useContent from '../../lib/useContent'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Keyboard } from 'swiper/modules'
 
@@ -16,9 +17,23 @@ import gallery7 from '../../assets/img/gallery-7.jpg'
 
 import './Gallery.css'
 
-const images = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7]
+const initialImages = [
+  gallery1,
+  gallery2,
+  gallery3,
+  gallery4,
+  gallery5,
+  gallery6,
+  gallery7,
+]
 
 function Gallery() {
+  const { content, error } = useContent()
+  const photos = [
+    ...initialImages.map((url, i) => ({ url, caption: `Скриншот ${i + 1}` })),
+    ...(content?.gallery || []),
+  ]
+  const images = photos.map((photo) => photo.url)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -58,6 +73,11 @@ function Gallery() {
       <div className="page__container gallery__container">
         <p className="page__eyebrow">Moments</p>
         <h1 className="page__title">Галерея поместья</h1>
+        {error && (
+          <p role="status">
+            Новые фотографии временно недоступны. Показана исходная галерея.
+          </p>
+        )}
 
         <p className="gallery__lead">
           Скриншоты и моменты из жизни поместья Бабочки. Нажми на изображение,
@@ -86,7 +106,11 @@ function Gallery() {
                   onClick={() => openModal(index)}
                   aria-label={`Открыть скриншот ${index + 1}`}
                 >
-                  <img src={image} alt={`Скриншот ${index + 1}`} />
+                  <img
+                    src={image}
+                    alt={photos[index].caption || `Скриншот ${index + 1}`}
+                    loading="lazy"
+                  />
 
                   <span className="gallery__number">
                     #{String(index + 1).padStart(2, '0')}
@@ -127,7 +151,10 @@ function Gallery() {
               {images.map((image, index) => (
                 <SwiperSlide key={image}>
                   <div className="gallery-modal__slide">
-                    <img src={image} alt={`Скриншот ${index + 1}`} />
+                    <img
+                      src={image}
+                      alt={photos[index].caption || `Скриншот ${index + 1}`}
+                    />
 
                     <span className="gallery-modal__counter">
                       {String(index + 1).padStart(2, '0')} /{' '}

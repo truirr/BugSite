@@ -56,7 +56,11 @@
   border: 1px solid var(--border);
   border-radius: 28px;
   background:
-    linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025)),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.025)
+    ),
     rgba(10, 8, 16, 0.72);
   box-shadow: 0 24px 90px rgba(0, 0, 0, 0.38);
   backdrop-filter: blur(18px);
