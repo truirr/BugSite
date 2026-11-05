@@ -1,3 +1,4 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import useContent from '../../lib/useContent'
@@ -94,18 +95,20 @@ function Gallery() {
       <div className="gallery__orb gallery__orb--right"></div>
 
       <div className="page__container gallery__container">
-        <p className="page__eyebrow">Moments</p>
-        <h1 className="page__title">Галерея поместья</h1>
+        <PageIntro
+          eyebrow="Estate memories / Архив"
+          title="Моменты, которые"
+          accent="остаются с нами."
+          description="Жизнь поместья Бабочки в фотографиях. Открой кадр, чтобы рассмотреть детали, и листай историю нашего отряда."
+          symbol="蝶"
+          meta="Фотоархив отряда"
+          action={{ to: '/composition', label: 'Знакомство с составом' }}
+        />
         {error && (
           <p role="status">
             Новые фотографии временно недоступны. Показана исходная галерея.
           </p>
         )}
-
-        <p className="gallery__lead">
-          Скриншоты и моменты из жизни поместья Бабочки. Нажми на изображение,
-          чтобы открыть его в полном размере.
-        </p>
 
         <div className="gallery__frame card">
           <Swiper
@@ -114,9 +117,9 @@ function Gallery() {
             spaceBetween={22}
             slidesPerView={1}
             breakpoints={{
-              760: { slidesPerView: 1.4 },
-              1024: { slidesPerView: 2 },
-              1440: { slidesPerView: 2.5 },
+              760: { slidesPerView: 1.15 },
+              1024: { slidesPerView: 1.35 },
+              1440: { slidesPerView: 1.35 },
             }}
           >
             {images.map((image, index) => (

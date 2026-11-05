@@ -1,5 +1,5 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import charterParagraphs from '../../data/charter-source.json'
 import { recommendations } from '../../data/promotion'
 import './PromotionInfo.css'
@@ -26,19 +26,15 @@ export default function PromotionInfo() {
   return (
     <section className="promotion-info page">
       <div className="page__container promotion-info__container">
-        <p className="page__eyebrow">Butterfly / Справочник корпуса</p>
-        <h1 className="charter__title">
-          Правила, на которые
-          <br />
-          <span>можно опереться.</span>
-        </h1>
-        <p className="charter__lead">
-          Устав организации «Истребители демонов», порядок повышения и правила
-          рекомендаций из предоставленного документа.
-        </p>
-        <Link className="charter__back" to="/promotion">
-          ← К калькулятору повышения
-        </Link>
+        <PageIntro
+          eyebrow="Corps charter / Устав"
+          title="Правила, на которые"
+          accent="можно опереться."
+          description="Устав корпуса истребителей: обязанности, порядок повышений и правила рекомендаций."
+          symbol="律"
+          meta="13 глав устава"
+          action={{ to: '/promotion', label: 'Калькулятор повышения' }}
+        />
 
         <div className="charter__highlights">
           {recommendations.map((item) => (

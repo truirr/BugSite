@@ -1,0 +1,143 @@
+/* Общая сетка справочников: темы слева, материал справа. */
+.library-layout {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.library-nav {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.library-nav__label {
+  margin: 0 0 12px;
+  color: #a992bb;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.library-nav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font: 15px var(--font-accent);
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    color 0.25s;
+}
+.library-nav button span {
+  font: 23px serif;
+  color: #a88cc1;
+}
+.library-nav button:hover,
+.library-nav button[aria-pressed='true'] {
+  background: #b586df16;
+  color: #eee0ff;
+  border-color: #c5a3e53d;
+}
+.library-nav button[aria-pressed='true'] span {
+  color: #dec0fa;
+}
+:is(.anatomy__section, .medical-info__section) {
+  min-width: 0;
+  padding: 30px;
+  animation: revealUp 0.45s ease both;
+}
+:is(.anatomy__section-head, .medical-info__section-head) {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+:is(.anatomy__icon, .medical-info__icon) {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid #c5a3e540;
+  border-radius: 18px;
+  background: #a579cc12;
+  color: #cfadee;
+  font: 34px serif;
+}
+:is(.anatomy__section-head, .medical-info__section-head) p {
+  margin: 0 0 8px;
+  color: #b49bc9;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+:is(.anatomy__section, .medical-info__section) h2 {
+  margin: 0;
+  font: 600 clamp(24px, 2.8vw, 38px)/1.3 var(--font-title);
+}
+:is(.anatomy__description, .medical-info__description) {
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.8;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #c5a3e526;
+}
+:is(.anatomy__block, .medical-info__card) {
+  padding: 24px;
+  border: 1px solid #c5a3e526;
+  border-radius: 16px;
+  background: #c5a3e505;
+}
+:is(.anatomy__block, .medical-info__card) p,
+:is(.anatomy__block, .medical-info__card) li {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.8;
+}
+:is(.anatomy__block, .medical-info__card) ul {
+  padding-left: 19px;
+  margin: 14px 0 0;
+}
+:is(.anatomy__block, .medical-info__card) li + li {
+  margin-top: 10px;
+}
+:is(.anatomy__block, .medical-info__card) li::marker {
+  color: #b68cda;
+}
+:is(.anatomy__block h3, .medical-info__card h4) {
+  margin: 0 0 12px;
+  color: #dec6f2;
+  font: 500 20px/1.45 var(--font-accent);
+}
+@media (max-width: 900px) {
+  .library-layout {
+    grid-template-columns: 1fr;
+  }
+  .library-nav {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .library-nav__label {
+    width: 100%;
+  }
+  .library-nav button {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 520px) {
+  :is(.anatomy__section, .medical-info__section) {
+    padding: 20px;
+  }
+  :is(.anatomy__block, .medical-info__card) {
+    padding: 18px;
+  }
+}

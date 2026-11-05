@@ -1,3 +1,4 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import { useState } from 'react'
 import './FirstAid.css'
 
@@ -185,8 +186,18 @@ function FirstAid() {
   return (
     <section className="firstaid page">
       <div className="page__container">
-        <p className="page__eyebrow">Roleplay medical guide</p>
-        <h1 className="page__title">ПМП и медицинская помощь</h1>
+        <PageIntro
+          eyebrow="Field guide / Практика"
+          title="Помощь начинается"
+          accent="с правильных действий."
+          description="Игровой справочник по травмам: признаки, последовательность RP-действий и состав набора первой помощи."
+          symbol="救"
+          meta="3 степени тяжести"
+          action={{
+            to: '/medical-information',
+            label: 'Медицинская библиотека',
+          }}
+        />
 
         <p className="firstaid__warning">
           Информация оформлена как RP-материал для сервера и не является
@@ -203,6 +214,7 @@ function FirstAid() {
                   ? 'firstaid__tab firstaid__tab--active'
                   : 'firstaid__tab'
               }
+              aria-pressed={active === group.level}
               onClick={() => setActive(group.level)}
             >
               {group.level}

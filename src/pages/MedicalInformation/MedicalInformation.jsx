@@ -1,5 +1,7 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import { useState } from 'react'
 
+import '../../styles/Library.css'
 import './MedicalInformation.css'
 
 const medicalSections = [
@@ -437,93 +439,103 @@ function MedicalInformation() {
       <div className="medical-info__orb medical-info__orb--right"></div>
 
       <div className="page__container medical-info__container">
-        <p className="page__eyebrow">Medical Library</p>
-        <h1 className="page__title">Медицинская информация</h1>
+        <PageIntro
+          eyebrow="Medical library / Библиотека"
+          title="Знания, которые"
+          accent="всегда под рукой."
+          description="Справочник для RP-лечения: инструменты, фармация, подготовка к операциям и медицинский осмотр."
+          symbol="薬"
+          meta="Библиотека поместья"
+          action={{ to: '/first-aid', label: 'Перейти к ПМП' }}
+        />
 
-        <p className="medical-info__lead">
-          Справочник для RP-лечения: инструменты, фармация, антибиотики,
-          наркозы, подготовка к операциям и полный медицинский осмотр.
-        </p>
+        <div className="library-layout">
+          <nav
+            className="medical-info__tabs library-nav"
+            aria-label="Разделы справочника"
+          >
+            <p className="library-nav__label">Выбери раздел</p>
+            {medicalSections.map((section) => (
+              <button
+                type="button"
+                key={section.title}
+                className={
+                  activeSection === section.title
+                    ? 'medical-info__tab medical-info__tab--active'
+                    : 'medical-info__tab'
+                }
+                aria-pressed={activeSection === section.title}
+                onClick={() => changeSection(section)}
+              >
+                <span>{section.icon}</span>
+                {section.title}
+              </button>
+            ))}
+          </nav>
 
-        <div className="medical-info__tabs">
-          {medicalSections.map((section) => (
-            <button
-              type="button"
-              key={section.title}
-              className={
-                activeSection === section.title
-                  ? 'medical-info__tab medical-info__tab--active'
-                  : 'medical-info__tab'
-              }
-              onClick={() => changeSection(section)}
-            >
-              <span>{section.icon}</span>
-              {section.title}
-            </button>
-          ))}
+          <article
+            className="medical-info__section card"
+            key={currentSection.title}
+          >
+            <div className="medical-info__section-head">
+              <div className="medical-info__icon">{currentSection.icon}</div>
+
+              <div>
+                <p>{currentSection.subtitle}</p>
+                <h2>{currentSection.title}</h2>
+              </div>
+            </div>
+
+            <p className="medical-info__description">
+              {currentSection.description}
+            </p>
+
+            {currentSection.groups.length > 1 && (
+              <div className="medical-info__subtabs">
+                {currentSection.groups.map((group) => (
+                  <button
+                    type="button"
+                    key={group.heading}
+                    className={
+                      activeGroup === group.heading
+                        ? 'medical-info__subtab medical-info__subtab--active'
+                        : 'medical-info__subtab'
+                    }
+                    aria-pressed={activeGroup === group.heading}
+                    onClick={() => setActiveGroup(group.heading)}
+                  >
+                    {group.heading}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div className="medical-info__group" key={currentGroup.heading}>
+              <h3>{currentGroup.heading}</h3>
+
+              <div className="medical-info__cards">
+                {currentGroup.cards.map((card, index) => (
+                  <article
+                    className="medical-info__card"
+                    key={card.title}
+                    style={{ '--delay': `${index * 0.055}s` }}
+                  >
+                    <h4>{card.title}</h4>
+                    <p>{card.text}</p>
+
+                    {card.meta && (
+                      <ul>
+                        {card.meta.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </article>
         </div>
-
-        <article
-          className="medical-info__section card"
-          key={currentSection.title}
-        >
-          <div className="medical-info__section-head">
-            <div className="medical-info__icon">{currentSection.icon}</div>
-
-            <div>
-              <p>{currentSection.subtitle}</p>
-              <h2>{currentSection.title}</h2>
-            </div>
-          </div>
-
-          <p className="medical-info__description">
-            {currentSection.description}
-          </p>
-
-          {currentSection.groups.length > 1 && (
-            <div className="medical-info__subtabs">
-              {currentSection.groups.map((group) => (
-                <button
-                  type="button"
-                  key={group.heading}
-                  className={
-                    activeGroup === group.heading
-                      ? 'medical-info__subtab medical-info__subtab--active'
-                      : 'medical-info__subtab'
-                  }
-                  onClick={() => setActiveGroup(group.heading)}
-                >
-                  {group.heading}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className="medical-info__group" key={currentGroup.heading}>
-            <h3>{currentGroup.heading}</h3>
-
-            <div className="medical-info__cards">
-              {currentGroup.cards.map((card, index) => (
-                <article
-                  className="medical-info__card"
-                  key={card.title}
-                  style={{ '--delay': `${index * 0.055}s` }}
-                >
-                  <h4>{card.title}</h4>
-                  <p>{card.text}</p>
-
-                  {card.meta && (
-                    <ul>
-                      {card.meta.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  )}
-                </article>
-              ))}
-            </div>
-          </div>
-        </article>
       </div>
     </section>
   )

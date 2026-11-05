@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Loader from './components/Loader/Loader'
 import Hero from './components/Hero/Hero'
+import EstateDirectory from './components/EstateDirectory/EstateDirectory'
 import About from './components/About/About'
 import Footer from './components/Footer/Footer'
 
@@ -20,11 +21,13 @@ import Tests from './pages/Tests/Tests'
 import Admin from './pages/Admin/Admin'
 
 import './App.css'
+import './styles/Theme.css'
 
 function Home() {
   return (
     <>
       <Hero />
+      <EstateDirectory />
       <About />
     </>
   )
@@ -32,18 +35,18 @@ function Home() {
 
 function App() {
   const location = useLocation()
-  const [loading, setLoading] = useState(true)
+  const [loadedNavigation, setLoadedNavigation] = useState(null)
+  // Новый переход сразу показывает загрузчик, без дополнительного рендера из эффекта.
+  const loading = loadedNavigation !== location.key
 
   useEffect(() => {
-    setLoading(true)
-
     const timer = setTimeout(() => {
-      setLoading(false)
+      setLoadedNavigation(location.key)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }, 850)
 
     return () => clearTimeout(timer)
-  }, [location.pathname])
+  }, [location.key])
 
   return (
     <>

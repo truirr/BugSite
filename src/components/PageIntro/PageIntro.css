@@ -1,0 +1,117 @@
+/* Единая вступительная композиция: текст, полезная ссылка и печать поместья. */
+.page-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 52px;
+  padding: 20px 0 44px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid #c5a3e526;
+}
+.page-intro__copy {
+  min-width: 0;
+  flex: 1;
+}
+.page-intro h1 {
+  margin: 20px 0 24px;
+  font: 600 clamp(32px, 4.5vw, 66px)/1.18 var(--font-title);
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.page-intro h1 > span {
+  display: block;
+  color: #c3a0ed;
+}
+.page-intro__description {
+  max-width: 650px;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.8;
+}
+.page-intro__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 26px;
+  font-size: 13px;
+}
+.page-intro__meta {
+  border: 1px solid #c5a3e533;
+  border-radius: 30px;
+  padding: 9px 14px;
+  color: #cdb4e4;
+}
+.page-intro__footer a {
+  color: #e5c9ff;
+  padding: 10px 0;
+}
+.page-intro__footer a span {
+  display: inline-block;
+  margin-left: 8px;
+  transition: transform 0.3s;
+}
+.page-intro__footer a:hover span {
+  transform: translate(3px, -3px);
+}
+.page-intro__crest {
+  position: relative;
+  flex: 0 0 190px;
+  height: 190px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c39be64d;
+  border-radius: 50%;
+  outline: 1px solid #c39be61a;
+  outline-offset: 14px;
+  background: radial-gradient(circle, #bb81ef18, transparent 70%);
+  animation: estateFloat 9s ease-in-out infinite;
+}
+.page-intro__crest > span {
+  color: #c9a4f1;
+  font: 86px serif;
+}
+.page-intro__crest small {
+  margin-top: 12px;
+  font: 8px var(--font-small);
+  letter-spacing: 2px;
+  color: #bca4cc;
+}
+.page-intro__crest i {
+  position: absolute;
+  inset: -24px;
+  border: 1px dashed #c39be629;
+  border-radius: 50%;
+  animation: estateOrbit 90s linear infinite;
+}
+@keyframes estateFloat {
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+@keyframes estateOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 760px) {
+  .page-intro {
+    gap: 20px;
+    padding-top: 0;
+  }
+  .page-intro__crest {
+    display: none;
+  }
+  .page-intro__description {
+    font-size: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-intro__crest,
+  .page-intro__crest i {
+    animation: none;
+  }
+}

@@ -1,3 +1,4 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import './Estate.css'
 
 const rules = [
@@ -106,64 +107,78 @@ function Estate() {
       <div className="estate__orb estate__orb--right"></div>
 
       <div className="page__container estate__container">
-        <p className="page__eyebrow">Butterfly Estate Code</p>
-        <h1 className="page__title">Правила поместья Бабочки</h1>
+        <PageIntro
+          eyebrow="Butterfly estate / Порядок"
+          title="Поместье Бабочки."
+          accent="Территория заботы."
+          description="Правила посещения и жизни поместья: обязанности, исключения и ответственность. Ознакомься с ними до своего первого визита."
+          symbol="館"
+          meta="15 правил поместья"
+          action={{ to: '/promotion-info', label: 'Устав корпуса' }}
+        />
 
-        <p className="estate__lead">
-          Свод правил, действующих на территории поместья. Каждый пункт содержит
-          основное требование, возможные исключения и наказание за нарушение.
-        </p>
-
-        <div className="estate__list">
-          {rules.map((rule, index) => (
-            <article
-              className="estate__rule card"
-              key={rule.title}
-              style={{ '--delay': `${index * 0.045}s` }}
-            >
-              <div className="estate__rule-index">
+        <div className="estate__layout">
+          <nav className="estate__contents" aria-label="Правила поместья">
+            <p className="page__eyebrow">В этом разделе</p>
+            {rules.map((rule, index) => (
+              <a key={rule.title} href={`#estate-rule-${index + 1}`}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
-              </div>
-
-              <div className="estate__rule-content">
-                <div className="estate__rule-head">
-                  <h2>{rule.title}</h2>
+                {rule.title}
+              </a>
+            ))}
+          </nav>
+          <div className="estate__list">
+            {rules.map((rule, index) => (
+              <article
+                className="estate__rule card"
+                id={`estate-rule-${index + 1}`}
+                key={rule.title}
+                style={{ '--delay': `${index * 0.045}s` }}
+              >
+                <div className="estate__rule-index">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
                 </div>
 
-                <p className="estate__rule-text">{rule.text}</p>
-
-                {rule.note && (
-                  <div className="estate__note">
-                    <strong>Примечание:</strong>
-                    <p>{rule.note}</p>
+                <div className="estate__rule-content">
+                  <div className="estate__rule-head">
+                    <h2>{rule.title}</h2>
                   </div>
-                )}
 
-                {rule.exceptions && rule.exceptions.length > 0 && (
-                  <div className="estate__block estate__block--exception">
-                    <h3>Исключение</h3>
+                  <p className="estate__rule-text">{rule.text}</p>
 
-                    {rule.exceptions.length === 1 ? (
-                      <p>{rule.exceptions[0]}</p>
-                    ) : (
-                      <ul>
-                        {rule.exceptions.map((exception) => (
-                          <li key={exception}>{exception}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                )}
+                  {rule.note && (
+                    <div className="estate__note">
+                      <strong>Примечание:</strong>
+                      <p>{rule.note}</p>
+                    </div>
+                  )}
 
-                {rule.punishment && (
-                  <div className="estate__block estate__block--punishment">
-                    <h3>Наказание</h3>
-                    <p>{rule.punishment}</p>
-                  </div>
-                )}
-              </div>
-            </article>
-          ))}
+                  {rule.exceptions && rule.exceptions.length > 0 && (
+                    <div className="estate__block estate__block--exception">
+                      <h3>Исключение</h3>
+
+                      {rule.exceptions.length === 1 ? (
+                        <p>{rule.exceptions[0]}</p>
+                      ) : (
+                        <ul>
+                          {rule.exceptions.map((exception) => (
+                            <li key={exception}>{exception}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+
+                  {rule.punishment && (
+                    <div className="estate__block estate__block--punishment">
+                      <h3>Наказание</h3>
+                      <p>{rule.punishment}</p>
+                    </div>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

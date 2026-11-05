@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import PageIntro from '../../components/PageIntro/PageIntro'
 import './Information.css'
 
 const commands = [
@@ -17,14 +19,38 @@ const commands = [
 ]
 
 function Information() {
+  const [search, setSearch] = useState('')
+  const query = search.trim().toLocaleLowerCase('ru')
+  const visibleCommands = commands.filter((command) =>
+    command.join(' ').toLocaleLowerCase('ru').includes(query),
+  )
   return (
     <section className="information page">
       <div className="page__container">
-        <p className="page__eyebrow">Server Guide</p>
-        <h1 className="page__title">Полезная информация</h1>
+        <PageIntro
+          eyebrow="Server guide / Навигатор"
+          title="Освойся в мире"
+          accent="истребителей."
+          description="Команды для общения и отыгровок. Найди нужную по названию или назначению и держи под рукой во время игры."
+          symbol="伝"
+          meta="13 команд сервера"
+          action={{ to: '/promotion-info', label: 'Читать устав' }}
+        />
+        <label className="information__search">
+          Найти команду
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Например: шёпот, ворон, /me"
+          />
+        </label>
+        <p className="information__count" role="status">
+          Найдено: {visibleCommands.length} из {commands.length}
+        </p>
 
         <div className="information__grid">
-          {commands.map(([command, description], index) => (
+          {visibleCommands.map(([command, description], index) => (
             <article
               className="information__command card"
               key={command}
@@ -36,6 +62,11 @@ function Information() {
           ))}
         </div>
 
+        {!visibleCommands.length && (
+          <p className="information__empty">
+            Совпадений нет. Попробуй другое название или команду.
+          </p>
+        )}
         <article className="information__bind card">
           <h2>Меню анимаций</h2>
           <p>

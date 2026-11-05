@@ -1,3 +1,4 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import { useEffect, useState } from 'react'
 import { api, uploadImage } from '../../lib/api'
 import './Admin.css'
@@ -177,8 +178,14 @@ export default function Admin() {
   return (
     <section className="admin page">
       <div className="page__container">
-        <p className="page__eyebrow">Butterfly · Control room</p>
-        <h1 className="admin__title">Управление поместьем</h1>
+        <PageIntro
+          eyebrow="Control room / Команда"
+          title="Управление"
+          accent="поместьем."
+          description="Тесты, состав и фотографии — всё для жизни отряда в одном месте."
+          symbol="管"
+          meta="Панель администрации"
+        />
         {error && (
           <div className="admin__notice admin__notice--error" role="alert">
             {error}

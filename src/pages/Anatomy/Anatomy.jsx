@@ -1,5 +1,7 @@
+import PageIntro from '../../components/PageIntro/PageIntro'
 import { useState } from 'react'
 
+import '../../styles/Library.css'
 import './Anatomy.css'
 
 const anatomySections = [
@@ -260,62 +262,71 @@ function Anatomy() {
       <div className="anatomy__orb anatomy__orb--right"></div>
 
       <div className="page__container anatomy__container">
-        <p className="page__eyebrow">Human Anatomy</p>
-        <h1 className="page__title">Анатомия человека</h1>
+        <PageIntro
+          eyebrow="Human anatomy / Учебник"
+          title="Устройство тела."
+          accent="Понимание в деталях."
+          description="Краткий справочник по системам организма. Выбери тему и изучи её строение, функции и основные особенности."
+          symbol="心"
+          meta="Системы организма"
+          action={{ to: '/tests', label: 'Проверить знания' }}
+        />
 
-        <p className="anatomy__lead">
-          Краткий справочник по основным системам организма. Выбери нужный
-          раздел, чтобы открыть информацию по нему.
-        </p>
-
-        <div className="anatomy__tabs">
-          {anatomySections.map((section) => (
-            <button
-              type="button"
-              key={section.title}
-              className={
-                activeSection === section.title
-                  ? 'anatomy__tab anatomy__tab--active'
-                  : 'anatomy__tab'
-              }
-              onClick={() => setActiveSection(section.title)}
-            >
-              <span>{section.icon}</span>
-              {section.title}
-            </button>
-          ))}
-        </div>
-
-        <article className="anatomy__section card" key={currentSection.title}>
-          <div className="anatomy__section-head">
-            <div className="anatomy__icon">{currentSection.icon}</div>
-
-            <div>
-              <p>{currentSection.subtitle}</p>
-              <h2>{currentSection.title}</h2>
-            </div>
-          </div>
-
-          <p className="anatomy__description">{currentSection.description}</p>
-
-          <div className="anatomy__blocks">
-            {currentSection.blocks.map((block, index) => (
-              <div
-                className="anatomy__block"
-                key={block.heading}
-                style={{ '--delay': `${index * 0.08}s` }}
+        <div className="library-layout">
+          <nav
+            className="anatomy__tabs library-nav"
+            aria-label="Разделы справочника"
+          >
+            <p className="library-nav__label">Выбери раздел</p>
+            {anatomySections.map((section) => (
+              <button
+                type="button"
+                key={section.title}
+                className={
+                  activeSection === section.title
+                    ? 'anatomy__tab anatomy__tab--active'
+                    : 'anatomy__tab'
+                }
+                aria-pressed={activeSection === section.title}
+                onClick={() => setActiveSection(section.title)}
               >
-                <h3>{block.heading}</h3>
-
-                <ul>
-                  {block.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+                <span>{section.icon}</span>
+                {section.title}
+              </button>
             ))}
-          </div>
-        </article>
+          </nav>
+
+          <article className="anatomy__section card" key={currentSection.title}>
+            <div className="anatomy__section-head">
+              <div className="anatomy__icon">{currentSection.icon}</div>
+
+              <div>
+                <p>{currentSection.subtitle}</p>
+                <h2>{currentSection.title}</h2>
+              </div>
+            </div>
+
+            <p className="anatomy__description">{currentSection.description}</p>
+
+            <div className="anatomy__blocks">
+              {currentSection.blocks.map((block, index) => (
+                <div
+                  className="anatomy__block"
+                  key={block.heading}
+                  style={{ '--delay': `${index * 0.08}s` }}
+                >
+                  <h3>{block.heading}</h3>
+
+                  <ul>
+                    {block.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
       </div>
     </section>
   )
